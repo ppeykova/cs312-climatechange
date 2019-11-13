@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="4de9d7d1-ba8f-4715-94b8-0e648bf8eb3c" name="cafe" url="http://devweb2019.cis.strath.ac.uk/cs312p/">
+        <fileTransfer port="0" accessType="LOCAL" />
+      </webServer>
+    </option>
+  </component>
+</project>
