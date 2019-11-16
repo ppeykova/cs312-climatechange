@@ -137,8 +137,6 @@ if(isset($_POST['submitreset'])) {
             $salt="sfgtjhdtfh658465461";
             $password=sha1($_POST['password'].$salt);
 
-            echo "email: " . $email . " and pw : " . $password;
-
             $stmt = $conn->prepare("UPDATE users SET password =:password  WHERE email=:email");
             $stmt->bindParam(':email', $email);
             $stmt->bindParam(':password', $password);
