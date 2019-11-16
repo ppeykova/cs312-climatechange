@@ -1,9 +1,17 @@
 <?php
-require ('connect.php');
-$categoryType = "";
-if(isset($_POST['submit'])){
-    $categoryType = $_POST['category'];
-}
+    require ('connect.php');
+
+    $categoryType = "";
+    $mainArea = "";
+
+    if(isset($_POST['submit'])){
+        if(isset($_POST['category'])) {
+            $categoryType = $_POST['category'];
+        }
+        if(isset($_POST['area'])) {
+            $mainArea = $_POST['area'];
+        }
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,8 +36,14 @@ if(isset($_POST['submit'])){
         function select(){
             return "SELECT * FROM `products`";
         }
-        function selectWhere($c){
-            return 'SELECT * FROM `products` WHERE category = "'.$c.'"';
+        function selectWhereCategory($categ){
+            return 'SELECT * FROM `products` WHERE category = "'.$categ.'"';
+        }
+        function selectWhereArea($locat){
+            return 'SELECT * FROM `products` WHERE area = "'.$locat.'"';
+        }
+        function selectWhereAndWhere($categor, $location){
+            return 'SELECT * FROM `products` WHERE category = "'.$categor.'" AND area = "'.$location.'"';
         }
         function listProducts($array){
             echo "</br>";
@@ -52,7 +66,7 @@ if(isset($_POST['submit'])){
         }
     ?>
     </br>
-    <form id ='form' method='post' action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
+    <form method='post' action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
     <select name="category">
         <option value="auto" selected disabled>Sort by Category</option>
         <option value="all" <?php if(isset($_POST["category"]) && $categoryType == "all"){echo "selected";} ?>> All </option>
@@ -67,9 +81,14 @@ if(isset($_POST['submit'])){
         <option value="ready_meal" <?php if(isset($_POST["category"]) && $categoryType == "ready_meal"){echo "selected";} ?>> Ready meals </option>
         <option value="drinks" <?php if(isset($_POST["category"]) && $categoryType == "drinks"){echo "selected";} ?>> Drinks </option>
     </select>
-    <input type="text" name="location" placeholder="Your location"/>
-    <select name="range" >
-        <option value="auto" selected disabled>Range to Search </option>
+    <select name="area" >
+        <option value="auto" selected disabled>Sort by Area</option>
+        <option value="all" <?php if(isset($_POST["area"]) && $mainArea == "all"){echo "selected";} ?>>All</option>
+        <option value="centre" <?php if(isset($_POST["area"]) && $mainArea == "centre"){echo "selected";} ?>>City Centre</option>
+        <option value="east" <?php if(isset($_POST["area"]) && $mainArea == "east"){echo "selected";} ?>>East End</option>
+        <option value="west" <?php if(isset($_POST["area"]) && $mainArea == "west"){echo "selected";} ?>>West End</option>
+        <option value="south" <?php if(isset($_POST["area"]) && $mainArea == "south"){echo "selected";} ?>>South Side</option>
+        <option value="north" <?php if(isset($_POST["area"]) && $mainArea == "north"){echo "selected";} ?>>North Glasgow</option>
     </select>
     <input type="submit" name="submit" value="Filter">
     </form>
@@ -77,10 +96,14 @@ if(isset($_POST['submit'])){
     <?php
         $array = array();
 
-        if(($categoryType == "all") || empty($categoryType)) {
+        if((($categoryType == "all") || empty($categoryType)) && (($mainArea == "all") || (empty($mainArea)))) {
             $sql = select();
+        } else if(($mainArea == "all") || (empty($mainArea))) {
+            $sql = selectWhereCategory($categoryType);
+        } else if((($categoryType == "all") || empty($categoryType))) {
+            $sql = selectWhereArea($mainArea);
         } else {
-            $sql = selectWhere($categoryType);
+            $sql = selectWhereAndWhere($categoryType, $mainArea);
         }
 
         $result = $conn->query($sql);
@@ -99,7 +122,7 @@ if(isset($_POST['submit'])){
         if ($result->rowCount() > 0) {
             listProducts($array);
         } else {
-            echo "No products available of this category right now. Try again later.";
+            echo "No products available of this criteria. Try again later.";
         }
 
     ?>
