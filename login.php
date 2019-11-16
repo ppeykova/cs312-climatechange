@@ -105,6 +105,7 @@ if(isset($_POST['submit'])){
 
         echo "<p>Login successful";
 
+            $_SESSION['user'] = true;
             $_SESSION['email'] = $email;
 
             ?>
