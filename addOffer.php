@@ -1,13 +1,34 @@
+<?php
+    $_SESSION['user_id'] = 2;
+    $_SESSION['logged_in'] = true;
+    $_SESSION['output_message'] = "";
+
+    $areas = ["City Centre", "East End", "West End", "South Side", "North Side"];
+    $categories = ["Beans", "Bakery", "Dairy", "Drinks", "Fruit", "Meat", "Nuts", "Ready Meals", "Sweets", "Vegetables"];
+    $maxPrices = [5, 10, 5, 10, 5, 10, 5, 15, 5, 5];
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="uikit-3.2.3\css\uikit.min.css" />
+    <link rel="stylesheet" href="uikit-3.2.3\css\uikit.min.css"/>
     <script src="uikit-3.2.3\js\uikit.min.js"></script>
     <script src="uikit-3.2.3\js\uikit-icons.min.js"></script>
     <script src="addOffer.js"></script>
+    <script>
+        var maxPrices = <?php echo json_encode($maxPrices); ?>;
+        function submitForm()
+        {
+            document.offerForm.submit();
+        }
+    </script>
     <style>
+        body
+        {
+            margin-left: 50px;
+        }
         label span
         {
             display: inline-block;
@@ -15,16 +36,17 @@
             text-align: right;
             padding-right: 20px;
         }
+        .error
+        {
+            color: red;
+            width: auto;
+        }
     </style>
     <title>Add Offer</title>
 </head>
 <body>
     <?php
-        $submitted = false;
-        $categories = ["Beans", "Bakery", "Dairy", "Drinks", "Fruit", "Meat", "Nuts", "Ready Meals", "Sweets", "Vegetables"];
-        $maxPrices = [5, 10, 5, 10, 5, 10, 5, 15, 5, 5];
-        $_SESSION['loggedIn'] = true;
-        if(!$_SESSION['loggedIn'])
+        if(!$_SESSION['logged_in'])
         {
             echo "<p>Error: User is not logged in</p>";
             die();
@@ -37,25 +59,45 @@
 
         function sendToDB()
         {
+            if(!empty($_FILES['image']['tmp_name']))
+                $image = file_get_contents($_FILES['image']['tmp_name']);
+            else
+                $image = "";
+
             $category = $_POST['category'];
             $retailPrice = $_POST['retailPrice'];
             $offerPrice = $_POST['offerPrice'];
             $description = $_POST['description'];
-            $addrStreet = $_POST['addrStreet'];
-            $addrCity = $_POST['addrCity'];
-            $addrPostcode = $_POST['addrPostcode'];
+            $area = $_POST['addrArea'];
+            $address = $_POST['addrStreet'].', '.$_POST['addrCity'].', '.$_POST['addrPostcode'];
 
-            // TODO: Connect and send to database
+            if(checkAddress())
+            {
+                // Connect and send to database
+                include 'connect.php';
+                $stmt = $conn->prepare("INSERT INTO `products` (`picture`, `category`, `description`, `genprice`, `offprice`, `address`, `area`, `user_id`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+
+                if($stmt->execute([$image, $category, $description, $retailPrice, $offerPrice, $address, $area, $_SESSION['user_id']]) === true)
+                    $_SESSION['output_message'] = "Offer added successfully!";
+                else
+                    $_SESSION['output_message'] = "Error: Offer could not be added, please try again...";
+            }
+        }
+
+        // Check if address entered is a valid address
+        function checkAddress()
+        {
+            return true;
         }
     ?>
     <h1>Add an Offer</h1>
-    <br>
-    <form name="offerForm" method="POST" action="addOffer.php" onclick="return validate()">
-        <p><?php if($submitted) { echo "Offer added successfully!"; } ?></p>
+    <form name="offerForm" method="POST" action="" enctype="multipart/form-data">
+        <p><?php if(isset($_POST['category'])) { echo $_SESSION['output_message']; } ?></p>
+        <p>Required fields marked with <span style="color: red;"/>*</span></p>
         <section>
             <h2>Offer Details</h2>
             <p><label for="image">
-                    <span>Image: </span> <input type="file" id="image" onchange="uploadImage(this)"> <img src="" id="preview" style="height: 70px;">
+                    <span>Image: </span> <input type="file" name="image" onchange="uploadImage(this)"> <img src="" id="preview" style="display: none; height: 70px;">
                 </label></p>
             <p><label for="category">
                     <span>Category: </span>
@@ -66,38 +108,48 @@
                                 echo "<option value='".$categories[$i]."'>".$categories[$i]."</option>";
                         ?>
                     </select>
-                    <span id="categoryMessage" style="display: none;">No category selected</span>
+                    <span class="error" id="categoryMessage">*</span>
                 </label></p>
             <p><label for="retailPrice">
-                    <span>Retail Price: </span> <input type="number" id="retailPrice" name="retailPrice">
-                    <span id="retailPriceMessage" style="display: none;">Retail price is required</span>
+                    <span>Retail Price: </span> <input type="number" id="retailPrice" name="retailPrice" min="0" step=".01">
+                    <span class="error" id="retailPriceMessage">*</span>
                 </label></p>
             <p><label for="offerPrice">
-                    <span>Offer Price: </span> <input type="number" id="offerPrice" name="offerPrice">
-                    <span id="offerPriceMessage" style="display: none;">Offer price is required</span>
+                    <span>Offer Price: </span> <input type="number" id="offerPrice" name="offerPrice" min="0" step=".01">
+                    <span class="error" id="offerPriceMessage">*</span>
                 </label></p>
             <p><label for="description">
                     <span>Description: </span> <textarea id="description" name="description" cols="40" rows="4"></textarea>
-                    <span id="descriptionMessage1" style="display: none;">Description is required</span>
-                    <span id="descriptionMessage2" style="display: none;">Description must be less than 255 characters</span>
+                    <span class="error" id="descriptionMessage">*</span>
                 </label></p>
         </section>
         <section>
-            <h2>Contact Details</h2>
+            <h2>Address Details</h2>
             <p><label for="addrStreet">
                     <span>Street: </span> <input type="text" id="addrStreet" name="addrStreet">
-                    <span id="addrStreetMessage" style="display: none;">Street is required</span>
+                    <span class="error" id="addrStreetMessage">*</span>
                 </label></p>
             <p><label for="addrCity">
                     <span>City/Town: </span> <input type="text" id="addrCity" name="addrCity">
-                    <span id="addrCityMessage" style="display: none;">City is required</span>
+                    <span class="error" id="addrCityMessage">*</span>
                 </label></p>
             <p><label for="addrPostcode">
                     <span>Postcode: </span> <input type="text" id="addrPostcode" name="addrPostcode">
-                    <span id="addrPostcodeMessage" style="display: none;">Postcode is required</span>
+                    <span class="error" id="addrPostcodeMessage">*</span>
+                </label></p>
+            <p><label for="area">
+                    <span>Area: </span>
+                    <select id="addrArea" name="addrArea">
+                        <option value="0">Please select</option>
+                        <?php
+                        for($i = 0; $i < count($areas); $i++)
+                            echo "<option value='".$areas[$i]."'>".$areas[$i]."</option>";
+                        ?>
+                    </select>
+                    <span class="error" id="addrAreaMessage">*</span>
                 </label></p>
         </section>
-        <p><label><span><button type="submit" id="submit">Add Order</button></span></label></p>
+        <p><label><span><button type="button" id="addBtn" name="addBtn" onclick="validate()">Add Order</button></span></label></p>
     </form>
 </body>
 </html>
