@@ -2,8 +2,10 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="4de9d7d1-ba8f-4715-94b8-0e648bf8eb3c" name="cafe" url="http://devweb2019.cis.strath.ac.uk/cs312p/">
-        <fileTransfer port="0" accessType="LOCAL" />
+      <webServer id="4de9d7d1-ba8f-4715-94b8-0e648bf8eb3c" name="cafe" url="http://devweb2019.cis.strath.ac.uk/~xrb17147/">
+        <fileTransfer host="cafe.cis.strath.ac.uk" port="22" rootFolder="/home/xrb17147/DEVWEB/2019" accessType="SFTP">
+          <option name="port" value="22" />
+        </fileTransfer>
       </webServer>
     </option>
   </component>
