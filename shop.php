@@ -1,5 +1,5 @@
 <?php
-    require ('connect.php');
+    require('connect.php');
 
     $categoryType = "";
     $mainArea = "";
@@ -18,9 +18,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="uikit-3.2.3\css\uikit.min.css" />
-    <script src="uikit-3.2.3\js\uikit.min.js"></script>
-    <script src="uikit-3.2.3\js\uikit-icons.min.js"></script>
     <title>Shop</title>
     <style>
         img {
@@ -32,7 +29,10 @@
         }
     </style>
 </head>
-    <?php
+<body>
+<?php
+        include('header1.php');
+
         function select(){
             return "SELECT * FROM `products`";
         }
