@@ -2,90 +2,49 @@
 <html>
 <?php
 require('connect.php');
+require('header1.php');
 
 /*LOG IN PAGE*/
 
 ?>
 <head><title>Log in</title>
-    <style>
-        .loginform{
-            border-radius: 6px;
-            background-color: #f2f2f2;
-            margin-left:20px;
-            margin-top:40px;
-            padding-top: 40px;
-            padding-left:20px;
-            padding-right:40px;
-            padding-bottom:10px;
-            float: left;
-        }
-        input[type=submit] {
-            font-size:15px;
-            background-image:linear-gradient(#FFFFFF, #DBB5AB, #D1ACA3,#BF9E95);
-            color: white;
-            padding: 5px 10px;
-            margin-left:80px;
-            margin-bottom: 20px;
-            border-color: #4F4F52;
-            border-radius: 10px;
-            cursor: pointer;
-        }
-        input[type=email] {
-            font-family: sans-serif;
-            font-size:20px;
-            margin-bottom:30px;
-            margin-left: 10px;
-            border-radius: 5px;
-        }
-        input[type=password] {
-            font-family: sans-serif;
-            font-size:20px;
-            margin-bottom:30px;
-            margin-left:10px;
-            border-radius: 5px;
 
-        }
-        label{
-            padding-left:10px;
-            font-size:20px;
-            font-family: sans-serif;
-        }
-        a:hover{
-            color:#9F2D12;
-        }
-        a{
-            color:#000000;
-            font-family: sans-serif;
-        }
-        .log{
-            padding-left:50px;
-            font-family: sans-serif;
-            font-size:50px;
-            padding-top:30px;
-        }
-        .err{
-
-            color:red;
-            font-family: sans-serif;
-            font-size: 20px;
-        }
-    </style>
 </head>
 <body>
 
 <?php
-echo "<div class='log'>Log in </div>";
+echo "<div class='container p-lg-5'>";
+echo "<div class='row'>";
+echo "<div class='col-md-5 mx-auto'>
+			<div class='form-control-plaintext'>";
+echo "<div class='col-md-12 text-center'>
+      <h1>Log in</h1></div>";
 
-echo '<div class="loginform">';
 echo "<form method='POST' action=''>
-      <label>Email</label><br/>
-       <input type='email' name='email' required><br/>
-      <label>Password</label><br/>
-      <input type='password' name='password' required><br/>
-      <input type='submit' name='submit'>
-      </form>";
-echo "<a href='resetpw.php'>Reset password</a><br/>";
-echo '</div>';
+      <div class='form-group'>
+      <label for='exampleInputEmail1'>Email</label>
+      <input type='email' name='email' class='form-control' id='exampleInputEmail1' placeholder='Enter email' required>
+      </div>
+      <div class='form-group'>
+      <label for='exampleInputPassword1'>Password</label>
+      <input type='password' name='password' class='form-control' id='exampleInputPassword1'  placeholder='Password' required>
+      </div>
+      <div class='text-center'>
+      <button type='submit' name='submit' class='btn btn-block mybtn btn-primary tx-tfm'>Log in</button>
+      </div>
+      </form><br/>";
+echo "<div class='form-group'>
+    <div class='col-md-12 md-5 mx-auto'>
+        <p class='text-center'>Forgotten password? <a href='resetpw.php'>Reset your password</a> </p>
+        <p class='text-center'>You have not made an account? Just <a href='signup.php'>sign up</a> now.</p>
+    </div>
+    </div>";
+echo '</div>
+    </div>
+    </div>
+    </div>
+    </div>';
+
 
 
 //log in
@@ -96,7 +55,7 @@ if(isset($_POST['submit'])){
     $salt="sfgtjhdtfh658465461";
     $password=sha1($_POST['password'].$salt);
 
-    $stmt=$conn->prepare("SELECT * FROM users WHERE email =:email AND password=:password ");
+    $stmt=$conn->prepare("SELECT * FROM `users` WHERE `email` =:email AND `password`=:password ");
     $stmt->bindParam(':email', $email);
     $stmt->bindParam(':password', $password);
     $stmt->execute();

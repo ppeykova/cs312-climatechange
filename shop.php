@@ -19,15 +19,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Shop</title>
-    <style>
-        img {
-            border: 1px solid black;
-            background-color: black;
-            border-radius: 1px;
-            padding: 2px;
-            height: 200px;
-        }
-    </style>
+
 </head>
 <body>
 <?php
@@ -45,29 +37,35 @@
         function selectWhereAndWhere($categor, $location){
             return 'SELECT * FROM `products` WHERE category = "'.$categor.'" AND area = "'.$location.'"';
         }
+
         function listProducts($array){
             echo "</br>";
-            echo "<table>\n";
+            echo "<table>";
             for ($j=0; $j < count($array); $j = $j + 3) {
-                echo "<tr>\n";
+                echo "<tr>";
                 for($c=0; $c < 3; $c++) {
                     if(!empty($array[$j + $c])) {
                         $id = $array[$j + $c]['id'];
                         $image = $array[$j + $c]['picture'];
                         $description = $array[$j + $c]['description'];
                         $price = $array[$j + $c]['offprice'];
-
-                        echo "<br><td><img src='data:image/jpeg;base64," . base64_encode($image) . "'/>" . "</br> $description </br> £ $price </br> <button> Add to basket </button></td>\n";
+                        echo "<div class='col-md-3' style='border-image-width: 15em'>
+                              <td class='card-body'><img class='card-img-top' style='max-height: 300px' src='data:image/jpeg;base64," . base64_encode($image) . "'/>" . "<p class='card-text'> $description </p><p class='card-text'> £ $price </p> <button class='btn btn-primary'> Add to basket </button></td></div>";
                     }
                 }
-                echo "</tr>\n";
+                echo "</tr>";
             }
-            echo "</table>\n";
+            echo "</table>";
         }
-    ?>
+
+
+?>
     </br>
-    <form method='post' action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
-    <select name="category">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 md-5 mx-auto" >
+        <form method='post' action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
+            <select name="category">
         <option value="auto" selected disabled>Sort by Category</option>
         <option value="all" <?php if(isset($_POST["category"]) && $categoryType == "all"){echo "selected";} ?>> All </option>
         <option value="fruit" <?php if(isset($_POST["category"]) && $categoryType == "fruit"){echo "selected";} ?>> Fruit </option>
@@ -90,9 +88,10 @@
         <option value="south" <?php if(isset($_POST["area"]) && $mainArea == "south"){echo "selected";} ?>>South Side</option>
         <option value="north" <?php if(isset($_POST["area"]) && $mainArea == "north"){echo "selected";} ?>>North Glasgow</option>
     </select>
-    <input type="submit" name="submit" value="Filter">
-    </form>
-
+    <input type="submit" name="submit" value="Filter" class="btn btn-primary">
+        </form>
+            </div>
+    <div class="mx-auto">
     <?php
         $array = array();
 
@@ -126,5 +125,8 @@
         }
 
     ?>
+        </div>
+        </div>
+    </div>
 </body>
 </html>
