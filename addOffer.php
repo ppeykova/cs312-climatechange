@@ -69,9 +69,10 @@
             $offerPrice = $_POST['offerPrice'];
             $description = $_POST['description'];
             $area = $_POST['addrArea'];
-            $address = $_POST['addrStreet'].', '.$_POST['addrCity'].', '.$_POST['addrPostcode'];
+            echo $_POST['geocodeLatitude'].", ".$_POST['geocodeLongitude'];
+            //$address = $_POST['addrStreet'].', '.$_POST['addrCity'].', '.$_POST['addrPostcode'];
 
-            if(checkAddress())
+            /*if(checkAddress($address))
             {
                 // Connect and send to database
                 include 'connect.php';
@@ -81,23 +82,20 @@
                     $_SESSION['output_message'] = "Offer added successfully!";
                 else
                     $_SESSION['output_message'] = "Error: Offer could not be added, please try again...";
-            }
-        }
-
-        // Check if address entered is a valid address
-        function checkAddress()
-        {
-            return true;
+            }*/
         }
     ?>
     <h1>Add an Offer</h1>
     <form name="offerForm" method="POST" action="" enctype="multipart/form-data">
+        <input type="hidden" name="geocodeLatitude" id="geocodeLatitude">
+        <input type="hidden" name="geocodeLongitude" id="geocodeLongitude">
         <p><?php if(isset($_POST['category'])) { echo $_SESSION['output_message']; } ?></p>
         <p>Required fields marked with <span style="color: red;"/>*</span></p>
         <section>
             <h2>Offer Details</h2>
             <p><label for="image">
-                    <span>Image: </span> <input type="file" name="image" onchange="uploadImage(this)"> <img src="" id="preview" style="display: none; height: 70px;">
+                    <span>Image: </span> <input type="file" id="image" name="image" onchange="uploadImage(this)"> <img src="" id="preview" style="display: none; height: 70px;">
+                    <span class="error" id="imageMessage">*</span>
                 </label></p>
             <p><label for="category">
                     <span>Category: </span>
@@ -149,7 +147,8 @@
                     <span class="error" id="addrAreaMessage">*</span>
                 </label></p>
         </section>
-        <p><label><span><button type="button" id="addBtn" name="addBtn" onclick="validate()">Add Order</button></span></label></p>
+        <p><label><button type="button" id="toHome" name="toHome" onclick="window.location.href = 'home.php';">Return to Home</button></label>
+            <label><button type="button" id="addBtn" name="addBtn" onclick="validate()">Add Offer</button></label></p>
     </form>
 </body>
 </html>
