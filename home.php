@@ -6,17 +6,17 @@
     <title>Home</title>
 </head>
 <body>
-<div>
+
 <?php
 include('header1.php'); ?>
-</div>
-<div class="page-header header-filter" data-parallax="true" style="background-image: url('material-kit-master/assets/img/veg.jpg')">
+
+<div class="page-header header-filter" data-parallax="true" style="background-image: url('/material-kit-master/assets/img/veg.jpg')">
     <div class="container">
         <div class="row">
             <div class="col-md-8 ml-auto mr-auto">
-                <div class="brand text-center">
-                <h1 class="title">Your Story Starts With Us.</h1>
-                <h4>Every landing page needs a small description after the big bold title, that&apos;s why we added this text here. Add here all the information that can make you or your product create the first impression.</h4>
+                <div class="brand text-md-left">
+                <h1>Your Story Starts With Us.</h1>
+                <h4 class="title text-md-left">Every landing page needs a small description after the big bold title, that&apos;s why we added this text here. Add here all the information that can make you or your product create the first impression.</h4>
                 </div>
             </div>
         </div>

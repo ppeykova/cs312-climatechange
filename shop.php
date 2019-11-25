@@ -1,7 +1,8 @@
 <?php
     require('connect.php');
 
-    $categoryType = "";
+
+$categoryType = "";
     $mainArea = "";
 
     if(isset($_POST['submit'])){
@@ -21,9 +22,12 @@
     <title>Shop</title>
 
 </head>
-<body>
+<body class="landing-page sidebar-collapse">
+<div class='page-header header-filter'>
+    <div class="container">
+        <div class="row">
 <?php
-        include('header1.php');
+require('header1.php');
 
         function select(){
             return "SELECT * FROM `products`";
@@ -41,29 +45,30 @@
         function listProducts($array){
             echo "</br>";
             echo "<table>";
+            echo "<tr>";
             for ($j=0; $j < count($array); $j = $j + 3) {
-                echo "<tr>";
+                echo "<div class='col'>";
                 for($c=0; $c < 3; $c++) {
+                    echo "<td>";
                     if(!empty($array[$j + $c])) {
                         $id = $array[$j + $c]['id'];
                         $image = $array[$j + $c]['picture'];
                         $description = $array[$j + $c]['description'];
                         $price = $array[$j + $c]['offprice'];
-                        echo "<div class='col-md-3' style='border-image-width: 15em'>
-                              <td class='card-body'><img class='card-img-top' style='max-height: 300px' src='data:image/jpeg;base64," . base64_encode($image) . "'/>" . "<p class='card-text'> $description </p><p class='card-text'> £ $price </p> <button class='btn btn-primary'> Add to basket </button></td></div>";
+                        echo "<div class='card' style='width: 20rem;'>
+                              <img class='card-img-top' style='max-height: 300px' src='data:image/jpeg;base64," . base64_encode($image) . "'/>" . "<div class='card-body'><p class='card-text'> $description </p><p class='card-text'> £ $price </p> <button class='btn btn-primary'> Add to basket </button></div></div>";
                     }
+                    echo "</td>";
                 }
+                echo "</div>";
                 echo "</tr>";
+                echo "</table>";
             }
-            echo "</table>";
         }
 
 
 ?>
-    </br>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4 md-5 mx-auto" >
+            <div class="col-lg-6 col-md-6 ml-auto mr-auto" >
         <form method='post' action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
             <select name="category">
         <option value="auto" selected disabled>Sort by Category</option>
@@ -126,7 +131,7 @@
 
     ?>
         </div>
-        </div>
     </div>
+
 </body>
 </html>

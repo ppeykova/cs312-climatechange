@@ -6,78 +6,7 @@ require('connect.php');
 <html>
 <head>
     <title>Register</title>
-    <style>
-        .registerform{
-            border-radius: 6px;
-            background-color: #f2f2f2;
-            margin-left:20px;
-            margin-top:40px;
-            padding-top: 40px;
-            padding-left:20px;
-            padding-right:40px;
-            padding-bottom: 10px;
-            float: left;
-
-        }
-        input[type=submit] {
-            font-size:15px;
-            background-image:linear-gradient(#FFFFFF, #DBB5AB, #D1ACA3,#BF9E95);
-            color: white;
-            padding: 5px 10px;
-            margin-left:100px;
-            border-color: #4F4F52;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        input[type=email] {
-            font-family: sans-serif;
-            font-size:20px;
-            margin-bottom:30px;
-            margin-left:20px;
-            border-radius: 5px;
-
-        }
-
-        input[type=text] {
-            font-family: sans-serif;
-            font-size:20px;
-            margin-bottom:30px;
-            margin-left:20px;
-            border-radius: 5px;
-
-        }
-
-        input[type=password] {
-            font-family: sans-serif;
-            font-size:20px;
-            margin-bottom:30px;
-            margin-left:20px;
-            border-radius: 5px;
-
-        }
-        label{
-            padding-left:20px;
-            font-size:20px;
-            font-family: sans-serif;
-
-        }
-
-        .reg{
-            padding-left:50px;
-            font-family: sans-serif;
-            font-size:50px;
-            padding-top:30px;
-        }
-        .err{
-
-            color:red;
-            font-family: sans-serif;
-            font-size: 20px;
-        }
-    </style>
 </head>
-<body>
 <script>
         //error checks
         function checkform(){
@@ -112,26 +41,41 @@ require('connect.php');
 
         }
     </script>
-
+<body  class="login-page sidebar-collapse">
 <?php
-
-
-echo "<div class='reg'>Register </div>";
-
-echo "<div class='registerform' >";
-echo "<form method='POST' action='' name='myform' onsubmit='return checkform();'>
-      <label>Name</label><br/>
-      <input type='text' name='name' required><br/>
-      <label>Email</label><br/>
-      <input type='email' name='email' required><br/>
-      <label>Password</label><br/>
-      <input type='password' name='password' id='password' required><br/>
-      <label>Confirm password</label><br/>
-      <input type='password' name='password2' id='password2' required><br/>
-      <input type='submit' value='Submit' name='submit'>
-      </form>";
-
-echo "</div>";
+require ('header1.php');
+echo "<div class='page-header header-filter' style='background-image: url('/material-kit-master/assets/img/landing.jpg'); background-size: cover; background-position: center center;'>    
+    <div class='container'>
+      <div class='row'>
+        <div class='col-lg-4 col-md-6 ml-auto mr-auto'>
+          <div class='card card-login'>
+            <form class='form'  method='POST' action='' name='myform' onsubmit='return checkform();'>
+              <div class='card-header card-header-primary text-center'>
+                <h4 class='card-title'>Register</h4>
+                </div>
+              <div class='card-body'>
+                <div class='input-group'>
+                  <input type='text' class='form-control' placeholder='Name...' required>
+                </div>
+                <div class='input-group '>
+                  <input type='email' class='form-control' placeholder='Email...' required>
+                </div>
+                <div class='input-group'>
+                  <input type='password' class='form-control' placeholder='Password...' required>
+                </div>
+                <div class='input-group'>
+                  <input type='password' class='form-control' placeholder=' Confirm password...' required>
+                </div>
+              </div>
+              <div class='footer text-center'>
+                <input type='submit' value='Register' class='btn btn-primary btn-link btn-wd btn-lg'></input>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>";
 
 
 if(isset($_POST['submit'])){

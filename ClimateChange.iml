@@ -4,6 +4,7 @@
     <exclude-output />
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/startbootstrap-small-business-gh-pages" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/bootstrap-4.0.0" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
