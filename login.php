@@ -65,7 +65,7 @@ if(isset($_POST['submit'])){
         echo "<p>Login successful";
 
             $_SESSION['email'] = $email;
-
+            $_SESSION['user'] = true;
             ?>
             <script>alert("Login successful");
                 location.href = "home.php"</script>;

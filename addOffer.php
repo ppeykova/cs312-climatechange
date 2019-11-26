@@ -9,7 +9,7 @@
     <script src="uikit-3.2.3\js\uikit-icons.min.js"></script>
     <script src="addOffer.js"></script>
     <script>
-        var maxPrices = <?php echo json_encode($maxPrices); ?>;
+        var maxPrices = [5, 10, 5, 10, 5, 10, 5, 15, 5, 5];
         function submitForm()
         {
             document.offerForm.submit();
@@ -40,16 +40,13 @@
         <?php include('header1.php'); ?>
     </div>
     <?php
-        $_SESSION['user_id'] = 2;
-        $_SESSION['logged_in'] = true;
         $_SESSION['output_message'] = "";
 
         $categories = ["Beans", "Bakery", "Dairy", "Drinks", "Fruit", "Meat", "Nuts", "Ready Meals", "Sweets", "Vegetables"];
-        $maxPrices = [5, 10, 5, 10, 5, 10, 5, 15, 5, 5];
 
-        if(!$_SESSION['logged_in'])
+        if(!isset($_SESSION['email']))
         {
-            echo "<p>Error: User is not logged in</p>";
+            echo "<p id='loginMessage'>Error: User is not logged in</p>";
             die();
         }
 
@@ -73,9 +70,9 @@
             $address = $_POST['addrStreet'].', '.$_POST['addrCity'].', '.$_POST['addrPostcode'];
 
             include 'connect.php';
-            $stmt = $conn->prepare("INSERT INTO `products` (`picture`, `category`, `description`, `genprice`, `offprice`, `addr_latitude`, `addr_longitude`, `address`, `user_id`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt = $conn->prepare("INSERT INTO `products` (`picture`, `category`, `description`, `genprice`, `offprice`, `addr_latitude`, `addr_longitude`, `address`, `email`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-            if($stmt->execute([$image, $category, $description, $retailPrice, $offerPrice, $_POST['geocodeLatitude'], $_POST['geocodeLongitude'], $address, $_SESSION['user_id']]) === true)
+            if($stmt->execute([$image, $category, $description, $retailPrice, $offerPrice, $_POST['geocodeLatitude'], $_POST['geocodeLongitude'], $address, $_SESSION['email']]) === true)
                 $_SESSION['output_message'] = "Offer added successfully!";
             else
                 $_SESSION['output_message'] = "Error: Offer could not be added, please try again...";

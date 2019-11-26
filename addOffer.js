@@ -113,6 +113,7 @@ function geocode(query)
                 if(response.results.length === 0)
                 {
                     console.log("Address could not be found");
+
                     document.getElementById("addrStreetMessage").textContent = "* Address could not be found";
                 }
                 else

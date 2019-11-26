@@ -1,5 +1,5 @@
 <?php
-    require('connect.php');
+
 ?>
 
 <!DOCTYPE html>
@@ -19,29 +19,53 @@
     <?php
         function sendOrderEmail()
         {
-            $email = "example@example.com";
-            $subject = "Wastood Order Invoice";
-            $message = "Thank you for your order.\n\n";
-            $headers = 'From: orders@wastood.com' . "\r\n" . 'X-Mailer: PHP/' . phpversion();
-            if(mail($email, $subject, $message, $headers))
-                return true;
+            if(isset($_COOKIE['basket']))
+            {
+                $offerId = json_decode($_COOKIE['basket']);
+                $inValues = implode(',', $offerId);
+                $stmt = queryDB("SELECT * FROM `products` WHERE `id` IN (".$inValues.")");
+                $email = $_SESSION['email'];
+                $subject = "Wastood Order Invoice";
+                $headers = 'From: orders@wastood.com' . "\r\n" . 'X-Mailer: PHP/' . phpversion();
+                $message = "Thank you for your order.\n\nOrder Details:\n";
+                $totalPrice = 0;
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC))
+                {
+                    $totalPrice += $row['offprice'];
+                    $message .= "(".$row["category"].") ".$row['description']." - £".number_format($row['offprice'], 2)." - ".$row['address']."\n\n";
+                }
+                $message .= "Order total: £".number_format($totalPrice, 2);
+                if (mail($email, $subject, $message, $headers))
+                    return true;
+                else
+                    return false;
+            }
             else
                 return false;
+        }
+
+        function queryDB($query)
+        {
+            require('connect.php');
+            $stmt = $conn->prepare($query);
+            $stmt->execute();
+            return $stmt;
         }
     ?>
     <h1  style="margin-top: 100px">Your Basket</h1>
     <div id="table_container">
         <?php
+            $sold = false;
             if(isset($_POST['submit']))
             {
                 if(sendOrderEmail())
                 {
-                    echo "Order successful!";
-                    die();
+                    echo "<p id='orderMessage'>Order successful! An email confirmation has been sent to you.</p>";
+                    $sold = true;
                 }
                 else
                 {
-                    echo "Your order could not be made, please try again...";
+                    echo "<p id='orderMessage'>Your order could not be made, please try again...</p>";
                 }
             }
             $totalPrice = 0;
@@ -51,41 +75,61 @@
                 $offerId = [-1];
 
             $inValues = implode(',', $offerId);
-            $stmt = $conn->prepare("SELECT * FROM `products` WHERE `id` IN (".$inValues.")");
-            $stmt->execute();
+            $stmt = queryDB("SELECT * FROM `products` WHERE `id` IN (".$inValues.")");
 
-            if($stmt->rowCount() == 0)
+            if($sold)
             {
-                echo "<p>There are no items in your basket.</p>";
-                echo "<p><button onclick=\"window.location.href = 'shop.php';\">Return to Shop</button></p>";
+                if($stmt->rowCount() != 0)
+                {
+                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC))
+                    {
+                        require('connect.php');
+                        $stmt2 = $conn->prepare("INSERT INTO `soldProducts` (`picture`, `category`, `description`, `genprice`, `offprice`, `address`, `email`) VALUES (?, ?, ?, ?, ?, ?, ?)");
+                        if($stmt2->execute([$row['picture'], $row['category'], $row['description'], $row['genprice'], $row['offprice'], $row['address'], $row['email']]) === true)
+                        {
+                            $id = $row['id'];
+                            $stmt2 = $conn->prepare("DELETE FROM `products` WHERE `products`.`id` = $id");
+                            $stmt2->execute();
+                        }
+                    }
+                }
             }
             else
             {
-                echo "<table id='basket_table'>";
-                echo "<tr><th>Image</th><th>Description</th><th>Offer Price</th><th>Address</th><th></th></tr>";
-                while ($row = $stmt->fetch(PDO::FETCH_ASSOC))
+                if($stmt->rowCount() == 0)
                 {
-                    $totalPrice += $row['offprice'];
-                    echo "<tr>";
-                    echo "<td><img src='data:image/jpeg;base64,".base64_encode($row['picture'])."'style='height:100px;'/></td>";
-                    echo "<td>(".$row["category"].") ".$row['description']."</td>";
-                    echo "<td>£".number_format($row["offprice"], 2)."</td>";
-                    echo "<td>".$row["address"]."</td>";
-                    echo "<td><button type='button', id='map_".$row['id']."'>View on Map</td>";
-                    echo "</tr>";
+                    echo "<p>There are no items in your basket.</p>";
+                    echo "<p><button onclick=\"window.location.href = 'shop.php';\">Return to Shop</button></p>";
+                }
+                else
+                {
+                    echo "<table id='basket_table'>";
+                    echo "<tr><th>Image</th><th>Description</th><th>Offer Price</th><th>Address</th><th></th></tr>";
+                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC))
+                    {
+                        $totalPrice += $row['offprice'];
+                        echo "<tr>";
+                        echo "<td><img src='data:image/jpeg;base64,".base64_encode($row['picture'])."'style='height:100px;'/></td>";
+                        echo "<td>(".$row["category"].") ".$row['description']."</td>";
+                        echo "<td>£".number_format($row["offprice"], 2)."</td>";
+                        echo "<td>".$row["address"]."</td>";
+                        echo "<td><button type='button', id='map_".$row['id']."'>View on Map</td>";
+                        echo "</tr>";
+                    }
                 }
             }
+
         ?>
     </div>
     <div id="confirm_order_box" style="float: right; margin: 20px 250px 0 0;">
         <?php
-        if($stmt->rowCount() != 0)
-        {
-            echo "<form method='POST' action='basket.php'>";
-            echo  "<p>Total price: £".number_format($totalPrice, 2)."</p>";
-            echo "<p><button onclick=\"window.location.href = 'shop.php';\">Return to Shop</button>
-                    <button name='submit' type='submit'>Confirm Order</button></p></form>";
-        }
+            if($stmt->rowCount() != 0)
+            {
+                echo "<form method='POST' action='basket.php'>";
+                echo  "<p>Total price: £".number_format($totalPrice, 2)."</p>";
+                echo "<p><button onclick=\"window.location.href = 'shop.php';\">Return to Shop</button>
+                        <button name='submit' type='submit'>Confirm Order</button></p></form>";
+            }
         ?>
     </div>
 </body>
