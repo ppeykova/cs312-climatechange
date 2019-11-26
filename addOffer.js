@@ -22,7 +22,6 @@ function validate()
     var addrStreet = document.getElementById("addrStreet");
     var addrCity = document.getElementById("addrCity");
     var addrPostcode = document.getElementById("addrPostcode");
-    var addrArea = document.getElementById("addrArea");
 
     document.getElementById("imageMessage").textContent = "*";
     document.getElementById("categoryMessage").textContent = "*";
@@ -32,7 +31,6 @@ function validate()
     document.getElementById("addrStreetMessage").textContent = "*";
     document.getElementById("addrCityMessage").textContent = "*";
     document.getElementById("addrPostcodeMessage").textContent = "*";
-    document.getElementById("addrAreaMessage").textContent = "*";
 
     if(image.value == 0)
     {
@@ -83,11 +81,6 @@ function validate()
     if(addrPostcode.value == "")
     {
         document.getElementById("addrPostcodeMessage").textContent = "* Postcode is required";
-        valid = false;
-    }
-    if(addrArea.value == 0)
-    {
-        document.getElementById("addrAreaMessage").textContent = "* Area is required";
         valid = false;
     }
     if(valid)

@@ -16,11 +16,39 @@
     <div>
         <?php include('header1.php'); ?>
     </div>
+    <?php
+        function sendOrderEmail()
+        {
+            $email = "example@example.com";
+            $subject = "Wastood Order Invoice";
+            $message = "Thank you for your order.\n\n";
+            $headers = 'From: orders@wastood.com' . "\r\n" . 'X-Mailer: PHP/' . phpversion();
+            if(mail($email, $subject, $message, $headers))
+                return true;
+            else
+                return false;
+        }
+    ?>
     <h1  style="margin-top: 100px">Your Basket</h1>
     <div id="table_container">
         <?php
+            if(isset($_POST['submit']))
+            {
+                if(sendOrderEmail())
+                {
+                    echo "Order successful!";
+                    die();
+                }
+                else
+                {
+                    echo "Your order could not be made, please try again...";
+                }
+            }
             $totalPrice = 0;
-            $offerId = [-1];
+            if(isset($_COOKIE['basket']))
+                $offerId = json_decode($_COOKIE['basket']);
+            else
+                $offerId = [-1];
 
             $inValues = implode(',', $offerId);
             $stmt = $conn->prepare("SELECT * FROM `products` WHERE `id` IN (".$inValues.")");
@@ -49,13 +77,14 @@
             }
         ?>
     </div>
-    <div id="continue_order" style="float: right; margin: 20px 250px 0 0;">
+    <div id="confirm_order_box" style="float: right; margin: 20px 250px 0 0;">
         <?php
         if($stmt->rowCount() != 0)
         {
-            echo "<p>Total price: £".number_format($totalPrice, 2)."</p>";
+            echo "<form method='POST' action='basket.php'>";
+            echo  "<p>Total price: £".number_format($totalPrice, 2)."</p>";
             echo "<p><button onclick=\"window.location.href = 'shop.php';\">Return to Shop</button>
-                    <button>Confirm Order</button></p>";
+                    <button name='submit' type='submit'>Confirm Order</button></p></form>";
         }
         ?>
     </div>

@@ -1,12 +1,3 @@
-<?php
-    $_SESSION['user_id'] = 2;
-    $_SESSION['logged_in'] = true;
-    $_SESSION['output_message'] = "";
-
-    $areas = ["City Centre", "East End", "West End", "South Side", "North Side"];
-    $categories = ["Beans", "Bakery", "Dairy", "Drinks", "Fruit", "Meat", "Nuts", "Ready Meals", "Sweets", "Vegetables"];
-    $maxPrices = [5, 10, 5, 10, 5, 10, 5, 15, 5, 5];
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,7 +36,17 @@
     <title>Add Offer</title>
 </head>
 <body>
+    <div>
+        <?php include('header1.php'); ?>
+    </div>
     <?php
+        $_SESSION['user_id'] = 2;
+        $_SESSION['logged_in'] = true;
+        $_SESSION['output_message'] = "";
+
+        $categories = ["Beans", "Bakery", "Dairy", "Drinks", "Fruit", "Meat", "Nuts", "Ready Meals", "Sweets", "Vegetables"];
+        $maxPrices = [5, 10, 5, 10, 5, 10, 5, 15, 5, 5];
+
         if(!$_SESSION['logged_in'])
         {
             echo "<p>Error: User is not logged in</p>";
@@ -68,21 +69,16 @@
             $retailPrice = $_POST['retailPrice'];
             $offerPrice = $_POST['offerPrice'];
             $description = $_POST['description'];
-            $area = $_POST['addrArea'];
             echo $_POST['geocodeLatitude'].", ".$_POST['geocodeLongitude'];
-            //$address = $_POST['addrStreet'].', '.$_POST['addrCity'].', '.$_POST['addrPostcode'];
+            $address = $_POST['addrStreet'].', '.$_POST['addrCity'].', '.$_POST['addrPostcode'];
 
-            /*if(checkAddress($address))
-            {
-                // Connect and send to database
-                include 'connect.php';
-                $stmt = $conn->prepare("INSERT INTO `products` (`picture`, `category`, `description`, `genprice`, `offprice`, `address`, `area`, `user_id`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            include 'connect.php';
+            $stmt = $conn->prepare("INSERT INTO `products` (`picture`, `category`, `description`, `genprice`, `offprice`, `addr_latitude`, `addr_longitude`, `address`, `user_id`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-                if($stmt->execute([$image, $category, $description, $retailPrice, $offerPrice, $address, $area, $_SESSION['user_id']]) === true)
-                    $_SESSION['output_message'] = "Offer added successfully!";
-                else
-                    $_SESSION['output_message'] = "Error: Offer could not be added, please try again...";
-            }*/
+            if($stmt->execute([$image, $category, $description, $retailPrice, $offerPrice, $_POST['geocodeLatitude'], $_POST['geocodeLongitude'], $address, $_SESSION['user_id']]) === true)
+                $_SESSION['output_message'] = "Offer added successfully!";
+            else
+                $_SESSION['output_message'] = "Error: Offer could not be added, please try again...";
         }
     ?>
     <h1>Add an Offer</h1>
@@ -134,17 +130,6 @@
             <p><label for="addrPostcode">
                     <span>Postcode: </span> <input type="text" id="addrPostcode" name="addrPostcode">
                     <span class="error" id="addrPostcodeMessage">*</span>
-                </label></p>
-            <p><label for="area">
-                    <span>Area: </span>
-                    <select id="addrArea" name="addrArea">
-                        <option value="0">Please select</option>
-                        <?php
-                        for($i = 0; $i < count($areas); $i++)
-                            echo "<option value='".$areas[$i]."'>".$areas[$i]."</option>";
-                        ?>
-                    </select>
-                    <span class="error" id="addrAreaMessage">*</span>
                 </label></p>
         </section>
         <p><label><button type="button" id="toHome" name="toHome" onclick="window.location.href = 'home.php';">Return to Home</button></label>
