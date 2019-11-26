@@ -45,8 +45,6 @@ if(isset($_POST['submit'])){
     ?>
 </div>
 
-<div>
-
 <h1>Items in the Marketplace</h1>
 
 <?php
@@ -95,11 +93,7 @@ if ($result->rowCount() > 0) {
 }
 ?>
 
-</div>
-
 <h1>Items Sold</h1>
-
-<div>
 
 <?php
 
@@ -144,8 +138,7 @@ if ($result->rowCount() > 0) {
     echo "No products available of this criteria. Try again later.";
 }
 ?>
-
-</div>
+    
 </body>
 </html>
 
