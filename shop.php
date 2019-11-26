@@ -1,5 +1,6 @@
 <?php
 require('connect.php');
+
 $categoryType = "";
 $mainArea = "";
 $userLocation = "";
@@ -47,12 +48,18 @@ function coordsToDistance($latA, $longA, $latB, $longB)
 </head>
 
 <body class="landing-page sidebar-collapse">
-<div class='page-header header-filter'>
+<div class="page-header header-filter" data-parallax="true"></div>
+<?php
+require('header1.php');
+?>
+<div class="main main-raised">
     <div class="container">
-        <div class="row">
+        <div class="section text-center">
+            <div class="row">
+                <div class="col-md-6 ml-auto mr-auto">
 
 <?php
-include('header1.php');
+
 function select(){
     return "SELECT * FROM `products`";
 }
@@ -68,10 +75,14 @@ function selectWhereAndWhere($categor, $location){
 function listProducts($array){
     echo "</br>";
     echo "<table>";
+
+    $height = 200;
+    $width = 200;
     for ($j=0; $j < count($array); $j = $j + 3) {
         echo "<tr>";
         echo "<div class='col'>";
         for($c=0; $c < 3; $c++) {
+
             if(!empty($array[$j + $c])) {
                 $distance = $array[$j + $c]['distance'];
                 $id = $array[$j + $c]['id'];
@@ -84,17 +95,18 @@ function listProducts($array){
 
                 if($distance != -1) {
                     echo "<div class='card' style='width: 20rem;'>
-                              <td><img class='card-img-top' style='max-height: 300px' src='data:image/jpeg;base64," . base64_encode($image) . "'/>" . "<div class='card-body'><p class='card-text'> $description </p><p class='card-text'> £ $price </p><p id='distance'>$distance km</p>  <a href=$url onclick=\"return !window . open(this . href, 'Google', 'width=800,height=800')\" target=\"_blank\"> View location map </a>  <button class='btn btn-primary' onclick='addToBasket($id)'> Add to basket </button></div></div></td>";
+                              <td><img class='card-img-top' style='max-height: 300px;' src='data:image/jpeg;base64," . base64_encode($image) . "'/>" . "<div class='card-body'><p class='card-text'> $description </p><p class='card-text'> £ $price </p><p id='distance'>$distance km</p>  <a href=$url onclick=\"return !window . open(this . href, 'Google', 'width=800,height=800')\" target=\"_blank\"> View location map </a>  <button class='btn btn-primary' onclick='addToBasket($id)'> Add to basket </button></div></div></td>";
                 }
                 else {
                     echo "<div class='card' style='width: 20rem;'>
-                              <td><img class='card-img-top' style='max-height: 300px' src='data:image/jpeg;base64," . base64_encode($image) . "'/>" . "<div class='card-body'><p class='card-text'> $description </p><p class='card-text'> £ $price </p><p id='distance'></p> <a href=$url onclick=\"return !window . open(this . href, 'Google', 'width=800,height=800')\" target=\"_blank\"> View location map </a> <button class='btn btn-primary' onclick='addToBasket($id)'> Add to basket </button></div></div></td>";
+                              <td><img class='card-img-top' style='max-height: 300px;' src='data:image/jpeg;base64," . base64_encode($image) . "'/>" . "<div class='card-body'><p class='card-text'> $description </p><p class='card-text'> £ $price </p><p id='distance'></p> <a href=$url onclick=\"return !window . open(this . href, 'Google', 'width=800,height=800')\" target=\"_blank\"> View location map </a> <button class='btn btn-primary' onclick='addToBasket($id)'> Add to basket </button></div></div></td>";
                 }
             }
         }
-        echo "</div>";
+       echo "</div>";
         echo "</tr>";
     }
+
     echo "</table>";
 }
 ?>
@@ -157,6 +169,7 @@ function listProducts($array){
                 }
             }
             if ($result->rowCount() > 0) {
+                echo $array[2]['distance'];
                 usort($array, function($a, $b) {
                     return $a['distance'] - $b['distance'];
                 });
@@ -167,5 +180,6 @@ function listProducts($array){
             ?>
         </div>
     </div>
+        </div>
 </body>
 </html>

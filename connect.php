@@ -10,11 +10,10 @@ $password="eaQuei6UeFaa";
 try {
     $conn=new PDO("mysql:host=$servername;dbname=cs312p",$username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    echo "Connection successful";
 }
 
 catch  (PDOException $e) {
-    echo "Connexion failed" .$e->getMessage();
+    echo "Connexion failed " .$e->getMessage();
 
 }
 ?>

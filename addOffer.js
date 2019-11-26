@@ -1,3 +1,4 @@
+
 function uploadImage(input)
 {
     var reader;
@@ -22,7 +23,6 @@ function validate()
     var addrStreet = document.getElementById("addrStreet");
     var addrCity = document.getElementById("addrCity");
     var addrPostcode = document.getElementById("addrPostcode");
-    var addrArea = document.getElementById("addrArea");
 
     document.getElementById("imageMessage").textContent = "*";
     document.getElementById("categoryMessage").textContent = "*";
@@ -32,12 +32,10 @@ function validate()
     document.getElementById("addrStreetMessage").textContent = "*";
     document.getElementById("addrCityMessage").textContent = "*";
     document.getElementById("addrPostcodeMessage").textContent = "*";
-    document.getElementById("addrAreaMessage").textContent = "*";
-
 
     if(image.value == 0)
     {
-        document.getElementById("imageMessage").textContent = "* No category selected";
+        document.getElementById("imageMessage").textContent = "* No image selected";
         valid = false;
     }
     if(category.options[category.selectedIndex].value == 0)
@@ -86,11 +84,54 @@ function validate()
         document.getElementById("addrPostcodeMessage").textContent = "* Postcode is required";
         valid = false;
     }
-    if(addrArea.value == 0)
-    {
-        document.getElementById("addrAreaMessage").textContent = "* Area is required";
-        valid = false;
-    }
     if(valid)
-        submitForm();
+    {
+        var address = addrStreet.value + ", " + addrCity.value + ", " + addrPostcode.value;
+        //alert(address);
+        geocode(address);
+    }
+}
+
+function geocode(query)
+{
+    $.ajax(
+        {
+            url: 'https://api.opencagedata.com/geocode/v1/json',
+            method: 'GET',
+            data:
+                {
+                    'key': '0bd6d81685ca456d862472ceadb767af',
+                    'q': query,
+                    'no_annotations': 1
+                    // see other optional params:
+                    // https://opencagedata.com/api#forward-opt
+                },
+            dataType: 'json',
+            statusCode:
+                {
+                    200: function(response)
+                    {  // success
+                        if(response.results.length === 0)
+                        {
+                            console.log("Address could not be found");
+
+                            document.getElementById("addrStreetMessage").textContent = "* Address could not be found";
+                        }
+                        else
+                        {
+                            console.log(response.results[0]['geometry']);
+                            document.getElementById("geocodeLatitude").setAttribute('value', response.results[0]['geometry']['lat']);
+                            document.getElementById("geocodeLongitude").setAttribute('value', response.results[0]['geometry']['lng']);
+                            submitForm();
+                        }
+                    },
+                    402: function()
+                    {
+                        console.log('hit free-trial daily limit');
+                        console.log('become a customer: https://opencagedata.com/pricing');
+                    }
+                    // other possible response codes:
+                    // https://opencagedata.com/api#codes
+                }
+        });
 }

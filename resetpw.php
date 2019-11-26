@@ -2,6 +2,7 @@
 <html>
 <?php
 require('connect.php');
+require('header1.php');
 /*RESET PASSWORD PAGE*/
 ?>
 <head>
@@ -136,6 +137,8 @@ if(isset($_POST['submitreset'])) {
             //encryption of password for security purposes
             $salt="sfgtjhdtfh658465461";
             $password=sha1($_POST['password'].$salt);
+
+            echo "email: " . $email . " and pw : " . $password;
 
             $stmt = $conn->prepare("UPDATE users SET password =:password  WHERE email=:email");
             $stmt->bindParam(':email', $email);

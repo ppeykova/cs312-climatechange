@@ -18,7 +18,7 @@ function selectWhereEmail($email){
     return 'SELECT * FROM `products` WHERE email = "'.$email.'"';
 }
 function selectWhereEmailSold($email){
-    return 'SELECT * FROM `soldProducts` WHERE email = "'.$email.'"';
+    return 'SELECT * FROM `soldProducts` WHERE email = "'.$email.'" AND timestamp  >= CURDATE() - 7';
 }
 function listProducts($array)
 {
