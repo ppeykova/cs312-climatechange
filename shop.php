@@ -32,7 +32,7 @@
         $deltaLong = abs($longA - $longB) * cos($avgLat * (pi() / 180)) * $kmsInDeg;
 
         $distance = sqrt(($deltaLat * $deltaLat) + ($deltaLong * $deltaLong));
-        return number_format($distance, 1);
+        return $distance;
     }
 ?>
 <!DOCTYPE html>
@@ -74,11 +74,11 @@
                 echo "<tr>";
                 for($c=0; $c < 3; $c++) {
                     if(!empty($array[$j + $c])) {
-                        $distance = $array[$j + $c]['distance'];
+                        $distance = number_format($array[$j + $c]['distance'], 1);
                         $id = $array[$j + $c]['id'];
                         $image = $array[$j + $c]['picture'];
                         $description = $array[$j + $c]['description'];
-                        $price = $array[$j + $c]['offprice'];
+                        $price = number_format($array[$j + $c]['offprice'], 2);
                         if($distance != -1) {
                             echo "<div class='col-md-3' style='border-image-width: 15em'>
                               <td class='card-body'><img class='card-img-top' style='max-height: 300px' src='data:image/jpeg;base64," . base64_encode($image) . "'/>" . "<p class='card-text'> $description </p><p class='card-text'> £ $price </p><p id='distance'>$distance km</p> <button class='btn btn-primary' onclick='addToBasket($id)'> Add to basket </button></td></div>";
@@ -156,18 +156,30 @@
             $array[] = $row;
         }
 
+        $distance = [];
         if(!empty($userLatitude) && !empty($userLongitude)) {
             for ($i = 0; $i < $result->rowCount(); $i++) {
                 $array[$i]['distance'] = coordsToDistance($userLatitude, $userLongitude, $array[$i]['addr_latitude'], $array[$i]['addr_longitude']);
+                $distance[$i] = $array[$i]['distance'];
             }
         }
-
+        $index = [];
+        for($i = 0; $i < count($distance); $i++)
+        {
+            $index[$i] = $i;
+        }
 
         if ($result->rowCount() > 0) {
-            usort($array, function($a, $b) {
-                return $a['distance'] - $b['distance'];
-            });
-            listProducts($array);
+            array_multisort($distance, $index);
+            $sortedArray = array();
+            for($i = 0; $i < count($index); $i++)
+            {
+                $sortedArray[$i] = $array[$index[$i]];
+            }
+            if(isset($_POST['userLocation']))
+                listProducts($sortedArray);
+            else
+                listProducts($array);
         } else {
             echo "No products available of this criteria. Try again later.";
         }
