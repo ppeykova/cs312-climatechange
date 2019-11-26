@@ -11,6 +11,19 @@
     <link rel="stylesheet" type="text/html" href="uikit-3.2.3/css/uikit.min.css" />
     <script src="uikit-3.2.3/js/uikit.min.js"></script>
     <script src="uikit-3.2.3/js/uikit-icons.min.js"></script>
+    <script>
+        function removeFromBasket(id)
+        {
+            var basketCookie = [];
+            if(Cookies.get('basket') != undefined)
+                basketCookie = JSON.parse(Cookies.get('basket'));
+
+            basketCookie.splice(basketCookie.indexOf(id), 1);
+            Cookies.set('basket', JSON.stringify(basketCookie));
+            alert("Product removed from basket");
+            window.location.href = "basket.php";
+        }
+    </script>
 </head>
 <body>
     <div>
@@ -107,13 +120,17 @@
                     echo "<tr><th>Image</th><th>Description</th><th>Offer Price</th><th>Address</th><th></th></tr>";
                     while ($row = $stmt->fetch(PDO::FETCH_ASSOC))
                     {
+                        $id = $row['id'];
                         $totalPrice += $row['offprice'];
                         echo "<tr>";
                         echo "<td><img src='data:image/jpeg;base64,".base64_encode($row['picture'])."'style='height:100px;'/></td>";
                         echo "<td>(".$row["category"].") ".$row['description']."</td>";
                         echo "<td>£".number_format($row["offprice"], 2)."</td>";
                         echo "<td>".$row["address"]."</td>";
-                        echo "<td><button type='button', id='map_".$row['id']."'>View on Map</td>";
+                        $address = str_replace(' ', '+', $row['address']);
+                        $url ="https://maps.google.com.au/maps?q=". $address;
+                        echo "<td><a href=$url onclick=\"return !window . open(this . href, 'Google', 'width=800,height=800')\" target=\"_blank\"> View location map </a></td>";
+                        echo "<td><button type='button', id='remove_".$id."' onclick='removeFromBasket($id)'>Remove From Basket</td>";
                         echo "</tr>";
                     }
                 }

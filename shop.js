@@ -1,17 +1,12 @@
 function addToBasket(id)
 {
-    //Cookies.remove('basket');
-    //return;
     var basketCookie = [];
-    if(Cookies.get('basket') != undefined) {
+    if(Cookies.get('basket') != undefined)
         basketCookie = JSON.parse(Cookies.get('basket'));
-        alert(basketCookie);
-        return;
-    }
 
     basketCookie.push(id);
     Cookies.set('basket', JSON.stringify(basketCookie));
-    alert(Cookies.get('basket'));
+    alert("Product added to basket successfully!");
 }
 
 function checkUserLocation()
