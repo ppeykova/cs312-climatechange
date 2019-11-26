@@ -128,7 +128,7 @@ function listProducts1($array){
 }
 
 $array = array();
-$sql = select();
+$sql = select1();
 $result = $conn->query($sql);
 if (!$result) {
     die("Query failed.");
