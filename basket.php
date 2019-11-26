@@ -98,7 +98,7 @@
                     {
                         require('connect.php');
                         $stmt2 = $conn->prepare("INSERT INTO `soldProducts` (`picture`, `category`, `description`, `genprice`, `offprice`, `address`, `email`) VALUES (?, ?, ?, ?, ?, ?, ?)");
-                        if($stmt2->execute([$row['picture'], $row['category'], $row['description'], $row['genprice'], $row['offprice'], $row['address'], $row['email']]) === true)
+                        if($stmt2->execute([$row['picture'], $row['category'], $row['description'], $row['genprice'], $row['offprice'], $row['address'], $_SESSION['email']]) === true)
                         {
                             $id = $row['id'];
                             $stmt2 = $conn->prepare("DELETE FROM `products` WHERE `products`.`id` = $id");

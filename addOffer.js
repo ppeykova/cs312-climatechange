@@ -86,7 +86,7 @@ function validate()
     if(valid)
     {
         var address = addrStreet.value + ", " + addrCity.value + ", " + addrPostcode.value;
-        //console.log(address);
+        //alert(address);
         geocode(address);
     }
 }

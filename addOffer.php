@@ -87,7 +87,7 @@
         <section>
             <h2>Offer Details</h2>
             <p><label for="image">
-                    <span>Image: </span> <input type="file" id="image" name="image" onchange="uploadImage(this)"> <img src="" id="preview" style="display: none; height: 70px;">
+                    <span>Image: </span> <input type="file" id="image" name="image" accept="image/*" onchange="uploadImage(this)"> <img src="" id="preview" style="display: none; height: 70px;">
                     <span class="error" id="imageMessage">*</span>
                 </label></p>
             <p><label for="category">
