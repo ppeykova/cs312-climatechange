@@ -29,6 +29,7 @@ if(isset($_POST['submit'])){
             padding: 2px;
             height: 200px;
         }
+
     </style>
     <title>Home</title>
 
@@ -44,13 +45,15 @@ if(isset($_POST['submit'])){
     ?>
 </div>
 
+<div>
+
 <h1>Items in the Marketplace</h1>
 
 <?php
 
 function select(){
-    $userId = $_SESSION['id'];
-    return "SELECT * FROM `Products` WHERE `user_id =` '.$userId.'";
+    $userEmail = $_SESSION['email'];
+    return "SELECT * FROM `Products` WHERE `email =` '.$userEmail.'";
 }
 
 function listProducts($array){
@@ -92,18 +95,18 @@ if ($result->rowCount() > 0) {
 }
 ?>
 
+</div>
+
 <h1>Items Sold</h1>
+
+<div>
 
 <?php
 
 function select1(){
-    $userId = $_SESSION['id'];
-    return "SELECT * FROM `soldProducts` WHERE `user_id =` '.$userId.'";
+    $userEmail = $_SESSION['email'];
+    return "SELECT * FROM `Products` WHERE `email =` '.$userEmail.'";
 }
-
-//function select1(){
- //   return "SELECT * FROM `soldProducts` WHERE `user_id`= 2";
-//}
 
 function listProducts1($array){
     echo "</br>";
@@ -125,9 +128,7 @@ function listProducts1($array){
 }
 
 $array = array();
-if((($categoryType == "all") || empty($categoryType)) && (($mainArea == "all") || (empty($mainArea)))) {
-    $sql = select();
-}
+$sql = select();
 $result = $conn->query($sql);
 if (!$result) {
     die("Query failed.");
@@ -143,3 +144,8 @@ if ($result->rowCount() > 0) {
     echo "No products available of this criteria. Try again later.";
 }
 ?>
+
+</div>
+</body>
+</html>
+
