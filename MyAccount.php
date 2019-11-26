@@ -51,7 +51,11 @@ if(isset($_POST['submit'])){
 
 function select(){
     $userEmail = $_SESSION['email'];
-    return "SELECT * FROM `Products` WHERE `email =` '.$userEmail.'";
+    return "SELECT * FROM `products` WHERE `email =` '.$userEmail.'";
+}
+
+function select2(){
+    return "SELECT * FROM `products` WHERE `email` = 2";
 }
 
 function listProducts($array){
@@ -74,9 +78,7 @@ echo "<table>\n";
 }
 
 $array = array();
-if((($categoryType == "all") || empty($categoryType)) && (($mainArea == "all") || (empty($mainArea)))) {
-    $sql = select();
-}
+$sql = select();
 $result = $conn->query($sql);
 if (!$result) {
     die("Query failed.");
@@ -122,7 +124,7 @@ function listProducts1($array){
 }
 
 $array = array();
-$sql = select1();
+$sql = select();
 $result = $conn->query($sql);
 if (!$result) {
     die("Query failed.");
@@ -138,7 +140,6 @@ if ($result->rowCount() > 0) {
     echo "No products available of this criteria. Try again later.";
 }
 ?>
-    
+
 </body>
 </html>
-
