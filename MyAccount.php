@@ -78,7 +78,7 @@ echo "<table>\n";
 }
 
 $array = array();
-$sql = select();
+$sql = select2();
 $result = $conn->query($sql);
 if (!$result) {
     die("Query failed.");
@@ -115,7 +115,7 @@ function listProducts1($array){
                 $image = $array[$j + $c]['picture'];
                 $description = $array[$j + $c]['description'];
                 $price = $array[$j + $c]['offprice'];
-                echo "<br><td><img src='data:image/jpeg;base64," . base64_encode($image) . "'/>" . "</br> $description </br> £ $price </br> <button> Add to basket </button></td>\n";
+                echo "<br><td><img src='data:image/jpeg;base64," . base64_encode($image) . "'/>" . "</br> $description </br> £ $price </td>\n";
             }
         }
         echo "</tr>\n";
