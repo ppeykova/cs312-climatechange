@@ -5,14 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Home</title>
 </head>
-<body>
-
-<?php
-include('header1.php'); ?>
-
-<div class="page-header header-filter" data-parallax="true" style="background-image: url('/material-kit-master/assets/img/veg.jpg')">
+<body class="landing-page sidebar-collapse">
+<div class="page-header header-filter" data-parallax="true" style="background-image: url('material-kit-master/assets/img/homep.jpg')">
     <div class="container">
         <div class="row">
+            <?php
+            require('header1.php'); ?>
             <div class="col-md-8 ml-auto mr-auto">
                 <div class="brand text-md-left">
                 <h1>Your Story Starts With Us.</h1>
@@ -172,18 +170,7 @@ include('header1.php'); ?>
         </div>
     </div>
 </div>
-<!--   Core JS Files   -->
-<script src="material-kit-master/assets/js/core/jquery.min.js" type="text/javascript"></script>
-<script src="material-kit-master/assets/js/core/popper.min.js" type="text/javascript"></script>
-<script src="material-kit-master/assets/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
-<script src="material-kit-master/assets/js/plugins/moment.min.js"></script>
-<!--	Plugin for the Datepicker, full documentation here: https://github.com/Eonasdan/bootstrap-datetimepicker -->
-<script src="material-kit-master/assets/js/plugins/bootstrap-datetimepicker.js" type="text/javascript"></script>
-<!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
-<script src="material-kit-master/assets/js/plugins/nouislider.min.js" type="text/javascript"></script>
-<!--  Google Maps Plugin    -->
-<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
-<!-- Control Center for Material Kit: parallax effects, scripts for the example pages etc -->
-<script src="material-kit-master/assets/js/material-kit.js?v=2.0.6" type="text/javascript"></script>
+<?php require('footer.php');
+?>
 </body>
 </html>
