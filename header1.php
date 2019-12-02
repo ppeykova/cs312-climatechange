@@ -15,12 +15,16 @@
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-6jHF7Z3XI3fF4XZixAuSu0gGKrXwoX/w3uFPxC56OtjChio7wtTGJWRW53Nhx6Ev" crossorigin="anonymous">
 
     <link href="material-kit-master/assets/css/material-kit.css?v=2.0.6" rel="stylesheet" />
-    <link href="material-kit-master/assets/demo/demo.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
+
+    <script src="material-kit-master/assets/js/core/jquery.min.js" type="text/javascript"></script>
+    <script src="material-kit-master/assets/js/core/popper.min.js" type="text/javascript"></script>
+    <script src="material-kit-master/assets/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
+    <script src="material-kit-master/assets/js/plugins/moment.min.js"></script>
+    <script src="material-kit-master/assets/js/plugins/bootstrap-datetimepicker.js" type="text/javascript"></script>
+    <script src="material-kit-master/assets/js/plugins/nouislider.min.js" type="text/javascript"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
-    <script>$(document).ready(function() { $('body').bootstrapMaterialDesign(); });</script>
+
 
 </head>
 <body class="landing-page sidebar-collapse">
@@ -38,13 +42,13 @@
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="home.php">Home <span class="sr-only">(current)</span> </a>
+                    <a class="nav-link" href="home.php">Home </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="shop.php">Shop</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Add offer</a>
+                    <a class="nav-link" href="addOffer.php">Add offer</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="basket.php">
@@ -55,24 +59,22 @@
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false">
                             <i class="material-icons">person</i>
                             <div class="ripple-container"></div>
-
                         </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <?php
-                        echo "<div class='dropdown-menu' aria-labelledby='navbarDropdownMenuLink'>";
 
                         if(isset($_SESSION['user'])){
                         echo "<a class='dropdown-item' href='logout.php'>Log out</a>";
                         echo "<a class='dropdown-item' href='myAccount.php'> My account</a>";
-                    } else {
-                            $id = '';
-                            $name = '';
-                        echo "<a class='dropdown-item' href='login.php?id=".$id."&name=".$name."'>Login</a>";
-                        echo "<a class='dropdown-item' href='signup.php?id=".$id."&name=".$name."'>Sign up</a>";
+                        } else {
+                                $id = '';
+                                $name = '';
+                            echo "<a class='dropdown-item' href='login.php?id=".$id."&name=".$name."'>Login</a>";
+                            echo "<a class='dropdown-item' href='signup.php?id=".$id."&name=".$name."'>Sign up</a>";
 
-                    }
-                        echo "</div>";
+                        }
                         ?>
-
+                        </div>
                 </li>
             </ul>
         </div>
