@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <?php
@@ -28,7 +29,6 @@ require('connect.php');
             border-radius: 10px;
             cursor: pointer;
         }
-
         input[type=email] {
             font-family: sans-serif;
             font-size:20px;
@@ -59,48 +59,36 @@ require('connect.php');
             font-family: sans-serif;
             font-size: 20px;
         }
-
     </style>
 </head>
 <body>
 <script>
     //checks length of variables
     function checkform(){
-
         var email = document.forms["myform"]["email"];
         var password = document.forms["myform"]["password"];
         var pass1 = document.forms["myform"]["password1"];
-
         var errs = "";
-
-
         if(email.value.length > 50){
             errs += " Wrong email!\n";
             password.style.background = "pink";
         }
-
         if(password.value.length > 50 || password.value.length < 8){
             errs += " Password must between 8 and 50 characters long!\n";
             password.style.background = "pink";
         }
-
         if(pass1.value.length < 8 || pass1.value.length > 50){
             errs += " Password must between 8 and 50 characters long!\n"
             pass1.style.background = "pink";
         }
-
         if(errs!=""){
             alert(errs);
         }
-
         return (errs == "");
-
     }
 </script>
 <?php
-
 echo "<div class='reset'>Reset password </div>";
-
 echo "<div class='resetform' >";
 echo "<form method='POST' action='' name='myform' onsubmit='return checkform();'>
 <label>Email</label><br/>
@@ -118,11 +106,9 @@ echo "</div>";
 <?php
 //reset
 if(isset($_POST['submitreset'])) {
-
     $email = $_POST['email'];
     $password = $_POST['password'];
     $password1 = $_POST['password1'];
-
     if($password != $password1 ) {
         echo "<div class='err'>";
         echo "Passwords don't match!";
@@ -136,9 +122,7 @@ if(isset($_POST['submitreset'])) {
             //encryption of password for security purposes
             $salt="sfgtjhdtfh658465461";
             $password=sha1($_POST['password'].$salt);
-
             echo "email: " . $email . " and pw : " . $password;
-
             $stmt = $conn->prepare("UPDATE users SET password =:password  WHERE email=:email");
             $stmt->bindParam(':email', $email);
             $stmt->bindParam(':password', $password);

@@ -26,9 +26,9 @@
         <?php
         require('header1.php');
         ?>
-            <div class="brand text-center">
-                <h1>Your Basket</h1>
-            </div>
+        <div class="brand text-center">
+            <h1>Your Basket</h1>
+        </div>
     </div>
 </div>
 <div class="main main-raised">
@@ -37,6 +37,8 @@
             <div class="row">
 
                 <?php
+                $var = "basket";
+
                 function sendOrderEmail()
                 {
                     if(isset($_COOKIE['basket']))
@@ -49,19 +51,21 @@
                         $headers = 'From: orders@wastood.com' . "\r\n" . 'X-Mailer: PHP/' . phpversion();
                         $message = "Thank you for your order.\n\nOrder Details:\n";
                         $totalPrice = 0;
+                        $totalGenPrice = 0;
                         while ($row = $stmt->fetch(PDO::FETCH_ASSOC))
                         {
                             $totalPrice += $row['offprice'];
+                            $totalGenPrice += $row['genprice'];
                             $message .= "(".$row["category"].") ".$row['description']." - £".number_format($row['offprice'], 2)." - ".$row['address']."\n\n";
                         }
                         $message .= "Order total: £".number_format($totalPrice, 2);
                         if (mail($email, $subject, $message, $headers))
-                            return true;
+                            return $totalGenPrice - $totalPrice;
                         else
-                            return false;
+                            return -1;
                     }
                     else
-                        return false;
+                        return -1;
                 }
                 function queryDB($query)
                 {
@@ -77,17 +81,26 @@
                     $sold = false;
                     if(isset($_POST['submit']))
                     {
-                        if(sendOrderEmail())
+                        if(!isset($_SESSION['email']))
                         {
-                            echo "<p id='orderMessage'>Order successful! An email confirmation has been sent to you.</p>";
-                            $sold = true;
+                            echo "<div class='text-center'>";
+                            echo "<p id='loginMessage'>Error: User is not logged in</p><br/>
+                  <p>Please <a href='login.php?var=".$var."'>Login</a> first.</p>";
+                            die();
+                            echo "</div>";
                         }
-                        else
-                        {
-                            echo "<p id='orderMessage'>Your order could not be made, please try again...</p>";
+                        else{
+                            if (($savedCost = sendOrderEmail()) != -1) {
+                                echo "<p id='orderMessage'>Order successful! You have saved £".number_format($savedCost, 2)."! An email confirmation has been sent to you.</p>";
+                                $sold = true;
+                            } else {
+                                echo "<p id='orderMessage'>Your order could not be made, please try again...</p>";
+                            }
                         }
+
                     }
                     $totalPrice = 0;
+                    $totalGenPrice = 0;
                     if(isset($_COOKIE['basket']))
                         $offerId = json_decode($_COOKIE['basket']);
                     else
@@ -116,7 +129,8 @@
                         if($stmt->rowCount() == 0)
                         {
                             echo "<p>There are no items in your basket.</p>";
-                            echo "<button class='btn btn-primary' onclick='window.location.href = 'shop.php';'>Return to Shop</button>";
+                           // echo "<button class='btn btn-primary' onclick='window.location.href = 'shop.php';'>Return to Shop</
+                            ?> <a href='shop.php'> Return to shop</a> <?php
                         }
                         else
                         {
@@ -129,13 +143,15 @@
                             {
                                 $id = $row['id'];
                                 $totalPrice += $row['offprice'];
+                                $totalGenPrice += $row['genprice'];
                                 echo "<tr>
                                         <div class='col'>";
                                 echo "<div class='card' style='width: 20rem;'>";
                                 echo "<td><img class='card-img-top' style='max-height: 300px;' src='data:image/jpeg;base64,".base64_encode($row['picture'])."'style='height:100px;'/></td>";
                                 echo "<div class='card-body'>";
                                 echo "<td class='card-text'>(".$row["category"].") ".$row['description']."</td>";
-                                echo "<td class='card-text'>£".number_format($row["offprice"], 2)."</td>";
+                                echo "<td class='card-text'><del>Originally: £".number_format($row["genprice"], 2)."</del></td>";
+                                echo "<td class='card-text'>Now: £".number_format($row["offprice"], 2)."</td>";
                                 echo "<td class='card-text'>".$row["address"]."</td>";
                                 $address = str_replace(' ', '+', $row['address']);
                                 $url ="https://maps.google.com.au/maps?q=". $address;
@@ -150,18 +166,23 @@
                     ?>
                 </div>
             </div>
-                <div id="confirm_order_box" class="modal-footer">
-                    <?php
-                    if($stmt->rowCount() != 0)
-                    {
+            <div id="confirm_order_box" class="modal-footer">
+                <?php
+                if(!$sold) {
+                    if ($stmt->rowCount() != 0) {
                         echo "<form method='POST' action='basket.php'>";
-                        echo  "<h4>Total price: £".number_format($totalPrice, 2)."</h4>";
-                        echo "<button class='btn btn-primary' type='button' href='shop.php'>Return to Shop</button>
-                        <button class='btn btn-primary' name='submit' type='submit'>Confirm Order</button>
+                        echo "<h4>Total price: £" . number_format($totalPrice, 2) . "</h4>";
+                      ?>  <a href='shop.php'> Return to shop</a> <?php
+                        //echo "<button class='btn btn-primary' type='button' href='shop.php'>Return to Shop</button>
+                        echo "<button class='btn btn-primary' name='submit' type='submit'>Confirm Order</button>
                         </form>";
                     }
-                    ?>
-                </div>
+                }else{
+                ?><a href='shop.php'> Return to shop</a> <?php
+                    //echo "<button class='btn btn-primary' type='button' onclick=\"window.location.href = 'shop.php';\">Return to Shop</button></form>";
+                }
+                ?>
+            </div>
         </div>
     </div>
 </div>

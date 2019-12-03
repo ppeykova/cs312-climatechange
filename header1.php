@@ -23,21 +23,23 @@
     <script src="material-kit-master/assets/js/plugins/moment.min.js"></script>
     <script src="material-kit-master/assets/js/plugins/bootstrap-datetimepicker.js" type="text/javascript"></script>
     <script src="material-kit-master/assets/js/plugins/nouislider.min.js" type="text/javascript"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-
+   <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+-->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
 
 </head>
 <body class="landing-page sidebar-collapse">
 <nav class="navbar navbar-transparent navbar-color-on-scroll fixed-top navbar-expand-lg" color-on-scroll="100" id="sectionsNav">
     <div class="container">
         <div class="navbar-translate">
-        <a class="navbar-brand" href="home.php"><h1>Wastood</h1></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="navbar-toggler-icon"></span>
-            <span class="navbar-toggler-icon"></span>
-            <span class="navbar-toggler-icon"></span>
-        </button>
+            <a class="navbar-brand" href="home.php"><h1>Wastood</h1></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="navbar-toggler-icon"></span>
+                <span class="navbar-toggler-icon"></span>
+                <span class="navbar-toggler-icon"></span>
+            </button>
         </div>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav ml-auto">
@@ -56,25 +58,23 @@
                     </a>
                 </li>
                 <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false">
-                            <i class="material-icons">person</i>
-                            <div class="ripple-container"></div>
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false">
+                        <i class="material-icons">person</i>
+                        <div class="ripple-container"></div>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <?php
-
                         if(isset($_SESSION['user'])){
-                        echo "<a class='dropdown-item' href='logout.php'>Log out</a>";
-                        echo "<a class='dropdown-item' href='myAccount.php'> My account</a>";
+                            echo "<a class='dropdown-item' href='logout.php'>Log out</a>";
+                            echo "<a class='dropdown-item' href='myAccount.php'> My account</a>";
                         } else {
-                                $id = '';
-                                $name = '';
-                            echo "<a class='dropdown-item' href='login.php?id=".$id."&name=".$name."'>Login</a>";
-                            echo "<a class='dropdown-item' href='signup.php?id=".$id."&name=".$name."'>Sign up</a>";
-
+                            $var = '';
+                            $email = '';
+                            echo "<a class='dropdown-item' href='login.php?var=".$var."&email=".$email."'>Login</a>";
+                            echo "<a class='dropdown-item' href='signup.php?var=".$var."&email=".$email."'>Sign up</a>";
                         }
                         ?>
-                        </div>
+                    </div>
                 </li>
             </ul>
         </div>
