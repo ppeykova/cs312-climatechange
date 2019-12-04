@@ -2,9 +2,7 @@
 <html>
 <?php
 require('connect.php');
-
 /*LOG IN PAGE*/
-
 ?>
 <head><title>Log in</title>
 
@@ -23,9 +21,19 @@ echo  "<div class='col-lg-4 col-md-6 ml-auto mr-auto'>
               </div>
               <div class='card-body'>
                 <div class='input-group'>
+                <div class='input-group-prepend'>
+                    <span class='input-group-text'>
+                      <i class='material-icons'>mail</i>
+                    </span>
+                  </div>
                   <input type='email' class='form-control' name='email' placeholder='Email...' required>
                 </div>
                 <div class='input-group'>
+                <div class='input-group-prepend'>
+                    <span class='input-group-text'>
+                      <i class='material-icons'>lock_outline</i>
+                    </span>
+                  </div>
                   <input type='password' class='form-control' name='password' placeholder='Password...' required>
                 </div>
               </div>
@@ -42,34 +50,39 @@ echo  "<div class='col-lg-4 col-md-6 ml-auto mr-auto'>
       </div>
     </div>
   </div>";
-
 //log in
+$var=$_GET['var'];
 if(isset($_POST['submit'])){
-
     $email=$_POST['email'];
     /*encryptning password for security purposes*/
     $salt="sfgtjhdtfh658465461";
     $password=sha1($_POST['password'].$salt);
-
     $stmt=$conn->prepare("SELECT * FROM `users` WHERE `email` =:email AND `password`=:password ");
     $stmt->bindParam(':email', $email);
     $stmt->bindParam(':password', $password);
     $stmt->execute();
-
     if($stmt->rowCount()>0) {
-
         echo "<p>Login successful";
-
-            $_SESSION['email'] = $email;
-
-            ?>
-            <script>alert("Login successful");
-                location.href = "home.php"</script>;
-            <?php
+        $_SESSION['email'] = $email;
+        $_SESSION['user'] = true;
+    if(empty($var)){
+        ?>
+        <script>alert("Login successful");
+            location.href = "home.php"</script>;
+    <?php
+    }
+    else if($var="basket"){
+    ?>
+        <script>alert("Login successful");
+            location.href = "basket.php"</script>;
+    <?php
+    }
     }
     else {
-        echo "<div class='err'>";
-        echo "<p>Login failed!</p>";
+    echo "<div class='err'>"; ?>
+        <script>alert("Username not found");
+        </script>;
+        <?php
         echo "</div>";
     }
 }//end if form button click
@@ -78,4 +91,4 @@ if(isset($_POST['submit'])){
 require('footer.php');
 ?>
 </body>
-</html
+</html>
