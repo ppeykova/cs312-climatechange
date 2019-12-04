@@ -1,3 +1,4 @@
+ 
 <?php
 ?>
 
@@ -21,7 +22,7 @@
     </script>
 </head>
 <body class="profile-page sidebar-collapse">
-<div class="page-header header-filter" data-parallax="true">
+<div class="page-header header-filter" data-parallax="true" style="background-image: url('material-kit-master/assets/img/basket.jpg')">
     <div class="container">
         <?php
         require('header1.php');
@@ -38,7 +39,6 @@
 
                 <?php
                 $var = "basket";
-
                 function sendOrderEmail()
                 {
                     if(isset($_COOKIE['basket']))
@@ -97,7 +97,6 @@
                                 echo "<p id='orderMessage'>Your order could not be made, please try again...</p>";
                             }
                         }
-
                     }
                     $totalPrice = 0;
                     $totalGenPrice = 0;
@@ -133,8 +132,8 @@
                         if($stmt->rowCount() == 0)
                         {
                             echo "<p>There are no items in your basket.</p>";
-                           // echo "<button class='btn btn-primary' onclick='window.location.href = 'shop.php';'>Return to Shop</
-                            ?> <a href='shop.php'> Return to shop</a> <?php
+                            // echo "<button class='btn btn-primary' onclick='window.location.href = 'shop.php';'>Return to Shop</
+                            ?> <a href='shop.php' class="btn btn-primary"> Return to shop</a> <?php
                         }
                         else
                         {
@@ -170,19 +169,21 @@
                     ?>
                 </div>
             </div>
-            <div id="confirm_order_box" class="modal-footer">
+            <div id="confirm_order_box">
                 <?php
                 if(!$sold) {
+                    echo "<div class='modal-footer'>";
                     if ($stmt->rowCount() != 0) {
                         echo "<form method='POST' action='basket.php'>";
                         echo "<h4>Total price: £" . number_format($totalPrice, 2) . "</h4>";
-                      ?>  <a href='shop.php'> Return to shop</a> <?php
+                        ?>  <a href='shop.php' class="btn btn-primary"> Return to shop</a> <?php
                         //echo "<button class='btn btn-primary' type='button' href='shop.php'>Return to Shop</button>
                         echo "<button class='btn btn-primary' name='submit' type='submit'>Confirm Order</button>
                         </form>";
                     }
+                    echo "</div>";
                 }else{
-                ?><a href='shop.php'> Return to shop</a> <?php
+                    ?><a href='shop.php' class="btn btn-primary"> Return to shop</a> <?php
                     //echo "<button class='btn btn-primary' type='button' onclick=\"window.location.href = 'shop.php';\">Return to Shop</button></form>";
                 }
                 ?>
