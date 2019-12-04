@@ -42,11 +42,11 @@ require('connect.php');
 </script>
 <body  class="login-page sidebar-collapse">
 <?php
-require ('header1.php');
 echo "<div class='page-header header-filter' style='background-image: url('/material-kit-master/assets/img/landing.jpg'); background-size: cover; background-position: center center;'>    
     <div class='container'>
-      <div class='row'>
-        <div class='col-lg-4 col-md-6 ml-auto mr-auto'>
+        <div class='row'>";
+       require ('header1.php');
+       echo "<div class='col-lg-4 col-md-6 ml-auto mr-auto'>
           <div class='card card-login'>
             <form class='form'  method='POST' action='' name='myform'>
               <div class='card-header card-header-primary text-center'>
@@ -54,15 +54,35 @@ echo "<div class='page-header header-filter' style='background-image: url('/mate
                 </div>
               <div class='card-body'>
                 <div class='input-group'>
+                <div class='input-group-prepend'>
+                    <span class='input-group-text'>
+                      <i class='material-icons'>face</i>
+                    </span>
+                  </div>
                   <input type='text' id='name' name='name' class='form-control' placeholder='Name...' required>
                 </div>
                 <div class='input-group '>
+                <div class='input-group-prepend'>
+                    <span class='input-group-text'>
+                      <i class='material-icons'>mail</i>
+                    </span>
+                  </div>
                   <input type='email' id='email' name='email' class='form-control' placeholder='Email...' required>
                 </div>
                 <div class='input-group'>
+                <div class='input-group-prepend'>
+                    <span class='input-group-text'>
+                      <i class='material-icons'>lock_outline</i>
+                    </span>
+                  </div>
                   <input type='password' id='password' name='password' class='form-control' placeholder='Password...' required>
                 </div>
                 <div class='input-group'>
+                 <div class='input-group-prepend'>
+                    <span class='input-group-text'>
+                      <i class='material-icons'>lock_outline</i>
+                    </span>
+                  </div>
                   <input type='password' id='password2' name='password2' class='form-control' placeholder=' Confirm password...' required>
                 </div>
               </div>
@@ -115,6 +135,9 @@ if(isset($_POST['email'])){
         }
     }
 }//end if form button click
+?>
+<?php
+require('footer.php');
 ?>
 </body>
 </html>
