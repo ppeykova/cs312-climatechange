@@ -32,7 +32,6 @@
                 $categories = ["Beans", "Bakery", "Dairy", "Drinks", "Fruit", "Meat", "Nuts", "Ready Meals", "Sweets", "Vegetables"];
                 if(!isset($_SESSION['email']))
                 {
-
                     echo "<div class='text-center'>";
                     echo "<p id='loginMessage'>Error: User is not logged in</p><br/>
                   <p>Please <a href='login.php'>Login</a> first.</p>";
@@ -62,23 +61,24 @@
                         $_SESSION['output_message'] = "Error: Offer could not be added, please try again...";
                 }
                 ?>
-                <div class="col-md-7 ml-auto mr-auto">
+                <div class="col-md-6 ml-auto mr-auto">
                     <form name="offerForm" method="POST" action="" enctype="multipart/form-data" class="form">
 
                         <div class="container">
                             <input type="hidden" name="geocodeLatitude" id="geocodeLatitude">
                             <input type="hidden" name="geocodeLongitude" id="geocodeLongitude">
                             <p><?php if(isset($_POST['category'])) { echo $_SESSION['output_message']; } ?></p>
-                            <p>Required fields marked with <span style="color: red;"/>*</span></p>
                             <div class="section">
                                 <div class="text-center">
                                     <h2>Offer Details</h2>
+                                    <p>Required fields marked with <span style="color: red;"/>*</span></p>
                                 </div>
                                 <p><label for="image">
-                                        <span class="card-text">Image: </span> <input type="file" id="image" name="image" accept="image/*" onchange="uploadImage(this)" required> <img src="" id="preview" class="card-img">
+                                        <span class="form-text">* Upload image: </span><br/><input type="file" class="input-group-btn" id="image" name="image" accept="image/*" onchange="uploadImage(this)" required> <img src="" id="preview" class="card-img">
                                         <span class="error" id="imageMessage"></span>
                                     </label></p>
                                 <p><label for="category">
+                                        <span class="error" id="categoryMessage">*</span>
                                         <select id="category" name="category" class="custom-select" required>
                                             <option value="0">Please select</option>
                                             <?php
@@ -86,37 +86,37 @@
                                                 echo "<option value='".$categories[$i]."'>".$categories[$i]."</option>";
                                             ?>
                                         </select>
-                                        <span class="error" id="categoryMessage">*</span>
                                     </label></p>
                                 <p><label for="retailPrice">
-                                        <input type="number" class="form-control" id="retailPrice" name="retailPrice" min="0" step=".01" placeholder="Retail Price:">
                                         <span class="error" id="retailPriceMessage">*</span>
+                                        <input type="number" class="form-control" id="retailPrice" name="retailPrice" min="0" step=".01" placeholder="Retail Price:">
                                     </label></p>
                                 <p><label for="offerPrice">
-                                        <input type="number" id="offerPrice" class="form-control" name="offerPrice" min="0" step=".01" placeholder="Offer Price:">
                                         <span class="error" id="offerPriceMessage">*</span>
+                                        <input type="number" id="offerPrice" class="form-control" name="offerPrice" min="0" step=".01" placeholder="Offer Price:">
                                     </label></p>
                                 <p><label for="description">
+                                        <span class="error top" id="descriptionMessage">*</span><br/>
                                         <textarea id="description" name="description" cols="40" rows="4" placeholder="Description:"></textarea>
-                                        <span class="error" id="descriptionMessage">*</span>
                                     </label></p>
                             </div>
                         </div>
+                        <div class="modal-footer"></div>
                         <div class="section">
                             <div class="text-center">
                                 <h2>Address Details</h2>
                             </div>
                             <p><label for="addrStreet">
-                                    <input class="form-control" type="text" id="addrStreet" name="addrStreet" placeholder="Street:">
                                     <span class="error" id="addrStreetMessage">*</span>
+                                    <input class="form-control" type="text" id="addrStreet" name="addrStreet" placeholder="Street:">
                                 </label></p>
                             <p><label for="addrCity">
-                                    <input class="form-control" type="text" id="addrCity" name="addrCity" placeholder="City/Town:">
                                     <span class="error" id="addrCityMessage">*</span>
+                                    <input class="form-control" type="text" id="addrCity" name="addrCity" placeholder="City/Town:">
                                 </label></p>
                             <p><label for="addrPostcode">
-                                    <input type="text" class="form-control" id="addrPostcode" name="addrPostcode" placeholder="Postcode">
                                     <span class="error" id="addrPostcodeMessage">*</span>
+                                    <input type="text" class="form-control" id="addrPostcode" name="addrPostcode" placeholder="Postcode">
                                 </label></p>
                         </div>
 
