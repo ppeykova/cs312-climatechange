@@ -1,8 +1,8 @@
-
 <!DOCTYPE html>
 <html>
 <?php
 require('connect.php');
+/*RESET PASSWORD PAGE*/
 ?>
 <head>
     <title>Reset password</title>
@@ -46,12 +46,27 @@ echo  "<div class='col-lg-4 col-md-6 ml-auto mr-auto'>
               </div>
               <div class='card-body'>
               <div class='input-group '>
+              <div class='input-group-prepend'>
+                    <span class='input-group-text'>
+                      <i class='material-icons'>mail</i>
+                    </span>
+                  </div>
                 <input type='email' class='form-control' name='email' placeholder='Email...' required>
               </div>
               <div class='input-group'>
+              <div class='input-group-prepend'>
+                    <span class='input-group-text'>
+                      <i class='material-icons'>lock_outline</i>
+                    </span>
+                  </div>
                 <input type='password' class='form-control' name='password' placeholder='New password...' required>
               </div>
               <div class='input-group'>
+              <div class='input-group-prepend'>
+                    <span class='input-group-text'>
+                      <i class='material-icons'>lock_outline</i>
+                    </span>
+                  </div>
                 <input type='password' class='form-control' name='password1' placeholder=' Confirm new password...' required>
               </div>
               </div>
