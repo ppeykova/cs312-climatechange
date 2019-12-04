@@ -77,10 +77,10 @@ echo "<div class='page-header header-filter' style='background-image: url('/mate
   </div>";
 if(isset($_POST['email'])){
     //allocating data forms into variables
-    $name       =$_POST['name'];
+    $name      =$_POST['name'];
     $email      =$_POST['email'];
     $password   =$_POST['password'];
-    $pw2=        $_POST['password2'];
+    $pw2        =$_POST['password2'];
     $stmt=$conn->prepare("SELECT * FROM users WHERE email=:email");
     $stmt->bindParam(":email",$email);
     $stmt->execute();
@@ -104,7 +104,7 @@ if(isset($_POST['email'])){
             if ($stmt->execute()){
                 $_SESSION['email'] = $email;
                 ?>
-                <script>alert("Account created!");location.href = "home.php";</script>
+                <script>alert("Account created!");location.href = "login.php";</script>
             <?php
             }//end if executed
             else { //if not executed
