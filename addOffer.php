@@ -53,7 +53,6 @@
                     $retailPrice = $_POST['retailPrice'];
                     $offerPrice = $_POST['offerPrice'];
                     $description = $_POST['description'];
-                    echo $_POST['geocodeLatitude'].", ".$_POST['geocodeLongitude'];
                     $address = $_POST['addrStreet'].', '.$_POST['addrCity'].', '.$_POST['addrPostcode'];
                     include 'connect.php';
                     $stmt = $conn->prepare("INSERT INTO `products` (`picture`, `category`, `description`, `genprice`, `offprice`, `addr_latitude`, `addr_longitude`, `address`, `email`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
