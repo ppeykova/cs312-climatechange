@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,7 +14,7 @@
             <div class="col-md-8 ml-auto mr-auto">
                 <div class="brand text-md-left">
                     <h1>Climate change</h1>
-                    <h4 class="title text-md-left">Climate change is a terrible problem, but you can help fight it by shopping on Wastood.</h4>
+                    <h4 class="title text-md-left">Climate change has a detrimental influence on all of us, but you can help fight it and make a change by shopping on Wastood.</h4>
                 </div>
             </div>
         </div>
@@ -52,7 +51,7 @@
                     </div>
                     <div class="col-md-4">
                         <div class="info">
-                            <div class="icon icon-info">
+                            <div class="icon icon-warning">
                                 <i class="material-icons">tag_faces</i>
                             </div>
                             <h4 class="info-title">Selling food</h4>
@@ -69,9 +68,6 @@
                     <div class="col-md-4">
                         <div class="team-player">
                             <div class="card card-plain">
-                                <div class="col-md-6 ml-auto mr-auto">
-                                    <img src="material-kit-master/assets/img/faces/avatar.jpg" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid">
-                                </div>
                                 <h4 class="card-title">Natalie Thomson
                                     <br>
                                     <small class="card-description text-muted">Buyer</small>
@@ -79,20 +75,12 @@
                                 <div class="card-body">
                                     <p class="card-description">Natalie is a new buyer, she really cares about the future of our planet and decided to take action by buying her food locally, Wastood enables her to do just that!</p>
                                 </div>
-                                <div class="card-footer justify-content-center">
-                                    <a href="#" class="btn btn-link btn-just-icon"><i class="fa fa-twitter"></i></a>
-                                    <a href="#" class="btn btn-link btn-just-icon"><i class="fa fa-instagram"></i></a>
-                                    <a href="#" class="btn btn-link btn-just-icon"><i class="fa fa-facebook-square"></i></a>
-                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="team-player">
                             <div class="card card-plain">
-                                <div class="col-md-6 ml-auto mr-auto">
-                                    <img src="material-kit-master/assets/img/faces/christian.jpg" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid">
-                                </div>
                                 <h4 class="card-title">Jamie Ball
                                     <br>
                                     <small class="card-description text-muted">Buyer</small>
@@ -100,30 +88,18 @@
                                 <div class="card-body">
                                     <p class="card-description">Jamie has been buying products on this site for a year now. "It's incredible how much money I can save buying on Wastood and as a bonus it helps fight climate change!".</p>
                                 </div>
-                                <div class="card-footer justify-content-center">
-                                    <a href="#" class="btn btn-link btn-just-icon"><i class="fa fa-twitter"></i></a>
-                                    <a href="#" class="btn btn-link btn-just-icon"><i class="fa fa-linkedin"></i></a>
-                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="team-player">
                             <div class="card card-plain">
-                                <div class="col-md-6 ml-auto mr-auto">
-                                    <img src="material-kit-master/assets/img/faces/kendall.jpg" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid">
-                                </div>
                                 <h4 class="card-title">Ana Pearson
                                     <br>
                                     <small class="card-description text-muted">Producer</small>
                                 </h4>
                                 <div class="card-body">
                                     <p class="card-description">Ana has been selling her organic vegetables on our platform for 2 years now. "It's a great opportunity for me to build a local customer base and have a positive impact on the planet at the same time".</p>
-                                </div>
-                                <div class="card-footer justify-content-center">
-                                    <a href="#" class="btn btn-link btn-just-icon"><i class="fa fa-twitter"></i></a>
-                                    <a href="#" class="btn btn-link btn-just-icon"><i class="fa fa-instagram"></i></a>
-                                    <a href="#" class="btn btn-link btn-just-icon"><i class="fa fa-facebook-square"></i></a>
                                 </div>
                             </div>
                         </div>
