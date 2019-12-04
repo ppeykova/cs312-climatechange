@@ -2,7 +2,6 @@
 <html>
 <?php
 require('connect.php');
-
 /*LOG IN PAGE*/
 ?>
 <head><title>Log in</title>
@@ -22,9 +21,19 @@ echo  "<div class='col-lg-4 col-md-6 ml-auto mr-auto'>
               </div>
               <div class='card-body'>
                 <div class='input-group'>
+                <div class='input-group-prepend'>
+                    <span class='input-group-text'>
+                      <i class='material-icons'>mail</i>
+                    </span>
+                  </div>
                   <input type='email' class='form-control' name='email' placeholder='Email...' required>
                 </div>
                 <div class='input-group'>
+                <div class='input-group-prepend'>
+                    <span class='input-group-text'>
+                      <i class='material-icons'>lock_outline</i>
+                    </span>
+                  </div>
                   <input type='password' class='form-control' name='password' placeholder='Password...' required>
                 </div>
               </div>
@@ -42,8 +51,6 @@ echo  "<div class='col-lg-4 col-md-6 ml-auto mr-auto'>
     </div>
   </div>";
 //log in
-
-
 $var=$_GET['var'];
 if(isset($_POST['submit'])){
     $email=$_POST['email'];
@@ -58,27 +65,26 @@ if(isset($_POST['submit'])){
         echo "<p>Login successful";
         $_SESSION['email'] = $email;
         $_SESSION['user'] = true;
-        if(empty($var)){
+    if(empty($var)){
         ?>
         <script>alert("Login successful");
             location.href = "home.php"</script>;
-        <?php
-        }
-        else if($var="basket"){
-            ?>
-            <script>alert("Login successful");
+    <?php
+    }
+    else if($var="basket"){
+    ?>
+        <script>alert("Login successful");
             location.href = "basket.php"</script>;
-         <?php
-        }
+    <?php
+    }
     }
     else {
-        echo "<div class='err'>"; ?>
+    echo "<div class='err'>"; ?>
         <script>alert("Username not found");
         </script>;
-<?php
+        <?php
         echo "</div>";
     }
-
 }//end if form button click
 ?>
 <?php
