@@ -85,4 +85,4 @@ if(isset($_POST['submit'])){
 require('footer.php');
 ?>
 </body>
-</html
+</html>
