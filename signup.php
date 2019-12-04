@@ -47,20 +47,20 @@ echo "<div class='page-header header-filter' style='background-image: url('/mate
                 </div>
               <div class='card-body'>
                 <div class='input-group'>
-                  <input type='text' class='form-control' placeholder='Name...' required>
+                  <input type='text' name='name' class='form-control' placeholder='Name...' required>
                 </div>
                 <div class='input-group '>
-                  <input type='email' class='form-control' placeholder='Email...' required>
+                  <input type='email' name='email' class='form-control' placeholder='Email...' required>
                 </div>
                 <div class='input-group'>
-                  <input type='password' class='form-control' placeholder='Password...' required>
+                  <input type='password' name='password' class='form-control' placeholder='Password...' required>
                 </div>
                 <div class='input-group'>
-                  <input type='password' class='form-control' placeholder=' Confirm password...' required>
+                  <input type='password' name='password2' class='form-control' placeholder=' Confirm password...' required>
                 </div>
               </div>
               <div class='footer text-center'>
-                <input type='submit' value='Register' class='btn btn-primary btn-link btn-wd btn-lg'></input>
+                <input type='submit' value='Register' name='submit' class='btn btn-primary btn-link btn-wd btn-lg'></input>
               </div>
             </form>
           </div>
@@ -69,11 +69,12 @@ echo "<div class='page-header header-filter' style='background-image: url('/mate
     </div>
   </div>";
 if(isset($_POST['submit'])){
+
     //allocating data forms into variables
-    $name       =$_POST['name'];
+    $name      =$_POST['name'];
     $email      =$_POST['email'];
     $password   =$_POST['password'];
-    $pw2=        $_POST['password2'];
+    $pw2        =$_POST['password2'];
     $stmt=$conn->prepare("SELECT * FROM users WHERE email=:email");
     $stmt->bindParam(":email",$email);
     $stmt->execute();
@@ -97,7 +98,7 @@ if(isset($_POST['submit'])){
             if ($stmt->execute()){
                 $_SESSION['email'] = $email;
                 ?>
-                <script>alert("Account created!");location.href = "home.php";</script>
+                <script>alert("Account created!");location.href = "login.php";</script>
             <?php
             }//end if executed
             else { //if not executed
