@@ -1,6 +1,5 @@
 <?php
 require ('connect.php');
-require ('header1.php');
 ?>
 
 <!DOCTYPE html>
