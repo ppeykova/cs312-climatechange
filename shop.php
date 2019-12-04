@@ -49,34 +49,27 @@ function coordsToDistance($latA, $longA, $latB, $longB)
 <body class="profile-page sidebar-collapse">
 <div class="page-header header-filter" data-parallax="true" style="background-image: url('material-kit-master/assets/img/muffin1.jpg')">
     <div class="container">
-<?php
-require('header1.php');
-?>
-    <div class="col-md-8 ml-auto mr-auto">
-        <div class="brand text-center">
-            <h1>Shop</h1>
+        <?php
+        require('header1.php');
+        ?>
+        <div class="col-md-8 ml-auto mr-auto">
+            <div class="brand text-center">
+                <h1>Shop</h1>
+            </div>
         </div>
-    </div>
     </div>
 </div>
 <div class="main main-raised">
     <div class="container">
         <div class="section text-center">
             <div class="row">
-                <div class="col-8 ml-auto mr-auto ">
-
+                <div class="col-md-8 ml-auto mr-auto ">
                     <?php
                     function select(){
                         return "SELECT * FROM `products`";
                     }
                     function selectWhereCategory($categ){
                         return 'SELECT * FROM `products` WHERE category = "'.$categ.'"';
-                    }
-                    function selectWhereArea($locat){
-                        return 'SELECT * FROM `products` WHERE area = "'.$locat.'"';
-                    }
-                    function selectWhereAndWhere($categor, $location){
-                        return 'SELECT * FROM `products` WHERE category = "'.$categor.'" AND area = "'.$location.'"';
                     }
                     function listProducts($array){
                         echo "<div class='table-responsive'>";
@@ -85,24 +78,25 @@ require('header1.php');
                         $width = 200;
                         for ($j=0; $j < count($array); $j = $j + 3) {
                             echo "<tr>";
-                            echo "<div class='col'>";
+                            echo "<div class='d-sm-table-row'>";
                             for($c=0; $c < 3; $c++) {
                                 if(!empty($array[$j + $c])) {
                                     $distance = number_format($array[$j + $c]['distance'], 1);
                                     $id = $array[$j + $c]['id'];
                                     $image = $array[$j + $c]['picture'];
                                     $description = $array[$j + $c]['description'];
+                                    $genPrice = number_format($array[$j + $c]['genprice'], 2);
                                     $price = number_format($array[$j + $c]['offprice'], 2);
                                     $address = $array[$j + $c]['address'];
                                     $address = str_replace(' ', '+', $address);
                                     $url ="https://maps.google.com.au/maps?q=". $address;
                                     if($distance != -1) {
-                                        echo "<div class='card' style='width: 20rem;'>
-                              <td><img class='card-img-top' style='max-height: 300px;' src='data:image/jpeg;base64," . base64_encode($image) . "'/>" . "<div class='card-body'><p class='card-text'> $description </p><p class='card-text'> £ $price </p><p id='distance'>$distance km</p>  <a href=$url onclick=\"return !window . open(this . href, 'Google', 'width=800,height=800')\" target=\"_blank\"> View location map </a>  <button class='btn btn-primary' onclick='addToBasket($id)'> Add to basket </button></div></div></td>";
+                                        echo "<div class='card-group'>
+                              <td class='d-md-table-cell'><img class='card-img-top' style='max-height: 300px;' src='data:image/jpeg;base64," . base64_encode($image) . "'/>" . "<div class='card-body'><p class='card-text'> $description </p><del class='card-text'> Originally: £ $genPrice </del></p><p class='card-text'> Now: £ $price </p><p id='distance'>$distance km</p>  <a href=$url class='btn btn-primary' onclick=\"return !window . open(this . href, 'Google', 'width=800,height=800')\" target=\"_blank\"> View location map </a>  <button class='btn btn-primary' onclick='addToBasket($id)'> Add to basket </button></div></div></td>";
                                     }
                                     else {
-                                        echo "<div class='card' style='width: 20rem;'>
-                              <td><img class='card-img-top' style='max-height: 300px;' src='data:image/jpeg;base64," . base64_encode($image) . "'/>" . "<div class='card-body'><p class='card-text'> $description </p><p class='card-text'> £ $price </p><p id='distance'></p> <a href=$url onclick=\"return !window . open(this . href, 'Google', 'width=800,height=800')\" target=\"_blank\"> View location map </a> <button class='btn btn-primary' onclick='addToBasket($id)'> Add to basket </button></div></div></td>";
+                                        echo "<div class='card-group'>
+                              <td class='d-md-table-cell'><img class='card-img-top' style='max-height: 300px;' src='data:image/jpeg;base64," . base64_encode($image) . "'/>" . "<div class='card-body'><p class='card-text'> $description </p><del class='card-text'> Originally: £ $genPrice </del></p><p class='card-text'> Now: £ $price </p><p id='distance'></p> <a href=$url class='btn btn-primary' onclick=\"return !window . open(this . href, 'Google', 'width=800,height=800')\" target=\"_blank\"> View location map </a> <button class='btn btn-primary' onclick='addToBasket($id)'> Add to basket </button></div></div></td>";
                                     }
                                 }
                             }
@@ -114,56 +108,38 @@ require('header1.php');
                     }
                     ?>
                     </br>
-                    <div class="col-4 ml-auto mr-auto" >
+                    <div class="col-8 ml-auto mr-auto" >
                         <form name="filterForm" method='post' action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
-                            <div class="align-content-between">
-                            <input type="hidden" name="userLatitude" id="userLatitude">
-                            <input type="hidden" name="userLongitude" id="userLongitude">
-                            <div class="bmd-form-group">
-                            <select name="category" class="custom-select">
-                                <option value="auto" selected disabled>Sort by Category</option>
-                                <option value="all" <?php if(isset($_POST["category"]) && $categoryType == "all"){echo "selected";} ?>> All </option>
-                                <option value="fruit" <?php if(isset($_POST["category"]) && $categoryType == "fruit"){echo "selected";} ?>> Fruit </option>
-                                <option value="vegetables" <?php if(isset($_POST["category"]) && $categoryType == "vegetables"){echo "selected";} ?>> Vegetables </option>
-                                <option value="dairy" <?php if(isset($_POST["category"]) && $categoryType == "dairy"){echo "selected";} ?>> Dairy </option>
-                                <option value="meat" <?php if(isset($_POST["category"]) && $categoryType == "meat"){echo "selected";} ?>> Meat </option>
-                                <option value="beans" <?php if(isset($_POST["category"]) && $categoryType == "beans"){echo "selected";} ?>> Beans </option>
-                                <option value="nuts" <?php if(isset($_POST["category"]) && $categoryType == "nuts"){echo "selected";} ?>> Nuts </option>
-                                <option value="bakery" <?php if(isset($_POST["category"]) && $categoryType == "bakery"){echo "selected";} ?>> Bakery </option>
-                                <option value="sweets" <?php if(isset($_POST["category"]) && $categoryType == "sweets"){echo "selected";} ?>> Sweets </option>
-                                <option value="ready_meal" <?php if(isset($_POST["category"]) && $categoryType == "ready_meal"){echo "selected";} ?>> Ready meals </option>
-                                <option value="drinks" <?php if(isset($_POST["category"]) && $categoryType == "drinks"){echo "selected";} ?>> Drinks </option>
-                            </select>
-                            </div>
-                            <div class="bmd-form-group">
-                            <select name="area" class="custom-select">
-                                <option value="auto" selected disabled>Sort by Area</option>
-                                <option value="all" <?php if(isset($_POST["area"]) && $mainArea == "all"){echo "selected";} ?>>All</option>
-                                <option value="centre" <?php if(isset($_POST["area"]) && $mainArea == "centre"){echo "selected";} ?>>City Centre</option>
-                                <option value="east" <?php if(isset($_POST["area"]) && $mainArea == "east"){echo "selected";} ?>>East End</option>
-                                <option value="west" <?php if(isset($_POST["area"]) && $mainArea == "west"){echo "selected";} ?>>West End</option>
-                                <option value="south" <?php if(isset($_POST["area"]) && $mainArea == "south"){echo "selected";} ?>>South Side</option>
-                                <option value="north" <?php if(isset($_POST["area"]) && $mainArea == "north"){echo "selected";} ?>>North Glasgow</option>
-                            </select>
-                            </div>
-                            <div class="bmd-form-group input-group">
-                            <input type="text" name="userLocation" id="userLocation" class="form-control" placeholder="Location" value="<?php echo $userLocation; ?>">
-                            </div>
-                            <input type="button" name="submitBtn" value="Filter" class="btn btn-primary" onclick="checkUserLocation()"><span id="userLocationMessage"></span>
+                                <input type="hidden" name="userLatitude" id="userLatitude">
+                                <input type="hidden" name="userLongitude" id="userLongitude">
+                                <div class="input-group">
+                                    <select name="category" class="custom-select">
+                                        <option value="auto" selected disabled>Sort by Category</option>
+                                        <option value="all" <?php if(isset($_POST["category"]) && $categoryType == "all"){echo "selected";} ?>> All </option>
+                                        <option value="fruit" <?php if(isset($_POST["category"]) && $categoryType == "fruit"){echo "selected";} ?>> Fruit </option>
+                                        <option value="vegetables" <?php if(isset($_POST["category"]) && $categoryType == "vegetables"){echo "selected";} ?>> Vegetables </option>
+                                        <option value="dairy" <?php if(isset($_POST["category"]) && $categoryType == "dairy"){echo "selected";} ?>> Dairy </option>
+                                        <option value="meat" <?php if(isset($_POST["category"]) && $categoryType == "meat"){echo "selected";} ?>> Meat </option>
+                                        <option value="beans" <?php if(isset($_POST["category"]) && $categoryType == "beans"){echo "selected";} ?>> Beans </option>
+                                        <option value="nuts" <?php if(isset($_POST["category"]) && $categoryType == "nuts"){echo "selected";} ?>> Nuts </option>
+                                        <option value="bakery" <?php if(isset($_POST["category"]) && $categoryType == "bakery"){echo "selected";} ?>> Bakery </option>
+                                        <option value="sweets" <?php if(isset($_POST["category"]) && $categoryType == "sweets"){echo "selected";} ?>> Sweets </option>
+                                        <option value="ready_meal" <?php if(isset($_POST["category"]) && $categoryType == "ready_meal"){echo "selected";} ?>> Ready meals </option>
+                                        <option value="drinks" <?php if(isset($_POST["category"]) && $categoryType == "drinks"){echo "selected";} ?>> Drinks </option>
+                                    </select>
+                                    <input type="text" name="userLocation" id="userLocation" class="form-control" style="margin-left: 2.5rem" placeholder="Location" value="<?php echo $userLocation; ?>">
+                                        <input type="button" name="submitBtn" value="Filter" class="btn btn-primary" style="margin-left: 2.5rem" onclick="checkUserLocation()"><span id="userLocationMessage"></span>
+                                </div>
                             </div>
                         </form>
                     </div>
-                    <div class="mx-auto">
+                    <div>
                         <?php
                         $array = array();
-                        if((($categoryType == "all") || empty($categoryType)) && (($mainArea == "all") || (empty($mainArea)))) {
+                        if(($categoryType == "all") || empty($categoryType)) {
                             $sql = select();
-                        } else if(($mainArea == "all") || (empty($mainArea))) {
-                            $sql = selectWhereCategory($categoryType);
-                        } else if((($categoryType == "all") || empty($categoryType))) {
-                            $sql = selectWhereArea($mainArea);
                         } else {
-                            $sql = selectWhereAndWhere($categoryType, $mainArea);
+                            $sql = selectWhereCategory($categoryType);
                         }
                         $result = $conn->query($sql);
                         if (!$result) {
@@ -187,16 +163,18 @@ require('header1.php');
                             $index[$i] = $i;
                         }
                         if ($result->rowCount() > 0) {
-                            array_multisort($distance, $index);
-                            $sortedArray = array();
-                            for($i = 0; $i < count($index); $i++)
-                            {
-                                $sortedArray[$i] = $array[$index[$i]];
-                            }
-                            if(isset($_POST['userLocation']))
+                            if(!empty($userLatitude) && !empty($userLongitude)) {
+                                array_multisort($distance, $index);
+                                $sortedArray = array();
+                                for($i = 0; $i < count($index); $i++)
+                                {
+                                    $sortedArray[$i] = $array[$index[$i]];
+                                }
                                 listProducts($sortedArray);
-                            else
+                            }
+                            else {
                                 listProducts($array);
+                            }
                         } else {
                             echo "No products available of this criteria. Try again later.";
                         }
