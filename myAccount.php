@@ -1,6 +1,5 @@
 <?php
 require ('connect.php');
-//require ('header1.php');
 ?>
 
 <!DOCTYPE html>
@@ -8,7 +7,7 @@ require ('connect.php');
 <head>
 </head>
 <body class="profile-page sidebar-collapse">
-<div class="page-header header-filter" data-parallax="true">
+<div class="page-header header-filter" data-parallax="true" style="background-image: url('material-kit-master/assets/img/banana.jpg')">
     <div class="container">
         <?php
         require('header1.php'); ?>
@@ -31,15 +30,18 @@ require ('connect.php');
                 }
                 function listProducts($array)
                 {
-                    echo "<div class='row'>";
+                    echo "<tr>";
+                    echo "<div class='d-sm-table-row'>";
+                    echo "<div class='card-columns'>";
                     for($j=0; $j < count($array); $j = $j + 3) {
                         $image = $array[$j]['picture'];
                         $description = $array[$j]['description'];
                         $price = $array[$j]['offprice'];
-                        echo "<div class='card' style='width: 20rem;'>
-                <img class='card-img-top' style='max-height: 300px' src='data:image/jpeg;base64," . base64_encode($image) . "'/>" . "<div class='card-body'><p class='card-text'> $description </p><p class='card-text'> £".number_format($price, 2)."</p></div></div>";
+                        echo "<div class='card-group card'>
+                <td class='d-md-table-cell'><img class='card-img-top' style='max-height: 300px' src='data:image/jpeg;base64," . base64_encode($image) . "'/>" . "<div class='card-body'><p class='card-text'> $description </p><p class='card-text'> £ $price </p></div></div></td>";
                     }
-                    echo "</div>";
+                    echo "</div></div>";
+                    echo "</tr>";
                 }
                 $email = $_SESSION['email'];
                 $sql = selectWhereEmail($email);
@@ -83,5 +85,7 @@ require ('connect.php');
         </div>
     </div>
 </div>
+<?php require('footer.php');
+?>
 </body>
 </html>
