@@ -36,7 +36,7 @@ require ('connect.php');
                 $description = $array[$j]['description'];
                 $price = $array[$j]['offprice'];
                 echo "<div class='card' style='width: 20rem;'>
-                <img class='card-img-top' style='max-height: 300px' src='data:image/jpeg;base64," . base64_encode($image) . "'/>" . "<div class='card-body'><p class='card-text'> $description </p><p class='card-text'> £ $price </p></div></div>";
+                <img class='card-img-top' style='max-height: 300px' src='data:image/jpeg;base64," . base64_encode($image) . "'/>" . "<div class='card-body'><p class='card-text'> $description </p><p class='card-text'> £".number_format($price, 2)."</p></div></div>";
             }
             echo "</div>";
         }

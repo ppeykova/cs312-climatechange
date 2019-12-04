@@ -102,7 +102,11 @@
                     $totalPrice = 0;
                     $totalGenPrice = 0;
                     if(isset($_COOKIE['basket']))
+                    {
                         $offerId = json_decode($_COOKIE['basket']);
+                        if(empty($offerId))
+                            $offerId = [-1];
+                    }
                     else
                         $offerId = [-1];
                     $inValues = implode(',', $offerId);
@@ -138,7 +142,7 @@
                             echo "<table class='table'>";
                             echo "<tr>
                                    <div class='col'>
-                                    <th class='th-description'>Image</th><th class='th-description'>Description</th><th class='th-description'>Offer Price</th><th class='th-description'>Address</th><th class='label'>Map</th><th class='label'></th></div></tr>";
+                                    <th class='th-description'>Image</th><th class='th-description'>Description</th><th class='th-description'><del>Original Price</del></th><th class='th-description'>Offer Price</th><th class='th-description'>Address</th><th class='label'>Map</th><th class='label'></th></div></tr>";
                             while ($row = $stmt->fetch(PDO::FETCH_ASSOC))
                             {
                                 $id = $row['id'];
@@ -150,8 +154,8 @@
                                 echo "<td><img class='card-img-top' style='max-height: 300px;' src='data:image/jpeg;base64,".base64_encode($row['picture'])."'style='height:100px;'/></td>";
                                 echo "<div class='card-body'>";
                                 echo "<td class='card-text'>(".$row["category"].") ".$row['description']."</td>";
-                                echo "<td class='card-text'><del>Originally: £".number_format($row["genprice"], 2)."</del></td>";
-                                echo "<td class='card-text'>Now: £".number_format($row["offprice"], 2)."</td>";
+                                echo "<td class='card-text'><del>£".number_format($row["genprice"], 2)."</del></td>";
+                                echo "<td class='card-text'>£".number_format($row["offprice"], 2)."</td>";
                                 echo "<td class='card-text'>".$row["address"]."</td>";
                                 $address = str_replace(' ', '+', $row['address']);
                                 $url ="https://maps.google.com.au/maps?q=". $address;
