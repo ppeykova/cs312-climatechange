@@ -13,8 +13,8 @@
             require('header1.php'); ?>
             <div class="col-md-8 ml-auto mr-auto">
                 <div class="brand text-md-left">
-                <h1>Your Story Starts With Us.</h1>
-                <h4 class="title text-md-left">Every landing page needs a small description after the big bold title, that&apos;s why we added this text here. Add here all the information that can make you or your product create the first impression.</h4>
+                    <h1>Climate change</h1>
+                    <h4 class="title text-md-left">Climate change has a detrimental influence on all of us, but you can help fight it and make a change by shopping on Wastood.</h4>
                 </div>
             </div>
         </div>
@@ -25,8 +25,8 @@
         <div class="section text-center">
             <div class="row">
                 <div class="col-md-8 ml-auto mr-auto">
-                    <h2 class="title">Let&apos;s talk product</h2>
-                    <h5 class="description">This is the paragraph where you can write more details about your product. Keep you user engaged by providing meaningful information. Remember that by this time, the user is curious, otherwise he wouldn&apos;t scroll to get here. Add a button if you want the user to see more.</h5>
+                    <h2 class="title">About us</h2>
+                    <h5 class="description">At Wastood, we take climate change very seriously. On way to tackle it is to shop locally because your food will travel a smaller distance meaning less greenhouse emissions associated with transport. The advantage of shopping with us is that food producers' offers are always at a reduced price, saving you a considerable amount of money. If you wish to add your own products to sell, it only takes a few minutes!</h5>
                 </div>
             </div>
             <div class="features">
@@ -34,55 +34,46 @@
                     <div class="col-md-4">
                         <div class="info">
                             <div class="icon icon-info">
-                                <i class="material-icons">chat</i>
+                                <i class="material-icons">thumb_up</i>
                             </div>
-                            <h4 class="info-title">Free Chat</h4>
-                            <p>Divide details about your product or agency work into parts. Write a few lines about each one. A paragraph describing a feature will be enough.</p>
+                            <h4 class="info-title">Reduced price</h4>
+                            <p>All the products sold on this plateform are at a reduced price, you won't find cheaper food elsewhere.</p>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="info">
                             <div class="icon icon-success">
-                                <i class="material-icons">verified_user</i>
+                                <i class="material-icons">check_circle</i>
                             </div>
-                            <h4 class="info-title">Verified Users</h4>
-                            <p>Divide details about your product or agency work into parts. Write a few lines about each one. A paragraph describing a feature will be enough.</p>
+                            <h4 class="info-title">Organic food available</h4>
+                            <p>Some of the producers offer organic-only food so we cater for all users' need.</p>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="info">
-                            <div class="icon icon-danger">
-                                <i class="material-icons">fingerprint</i>
+                            <div class="icon icon-warning">
+                                <i class="material-icons">tag_faces</i>
                             </div>
-                            <h4 class="info-title">Fingerprint</h4>
-                            <p>Divide details about your product or agency work into parts. Write a few lines about each one. A paragraph describing a feature will be enough.</p>
+                            <h4 class="info-title">Selling food</h4>
+                            <p>If you have fresh products to add to the website to sell, you can do so in just a few clicks.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="section text-center">
-            <h2 class="title">Here is our team</h2>
+            <h2 class="title">Here is our users</h2>
             <div class="team">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="team-player">
                             <div class="card card-plain">
-                                <div class="col-md-6 ml-auto mr-auto">
-                                    <img src="material-kit-master/assets/img/faces/avatar.jpg" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid">
-                                </div>
-                                <h4 class="card-title">Gigi Hadid
+                                <h4 class="card-title">Natalie Thomson
                                     <br>
-                                    <small class="card-description text-muted">Model</small>
+                                    <small class="card-description text-muted">Buyer</small>
                                 </h4>
                                 <div class="card-body">
-                                    <p class="card-description">You can write here details about one of your team members. You can give more details about what they do. Feel free to add some
-                                        <a href="#">links</a> for people to be able to follow them outside the site.</p>
-                                </div>
-                                <div class="card-footer justify-content-center">
-                                    <a href="#" class="btn btn-link btn-just-icon"><i class="fa fa-twitter"></i></a>
-                                    <a href="#" class="btn btn-link btn-just-icon"><i class="fa fa-instagram"></i></a>
-                                    <a href="#" class="btn btn-link btn-just-icon"><i class="fa fa-facebook-square"></i></a>
+                                    <p class="card-description">Natalie is a new buyer, she really cares about the future of our planet and decided to take action by buying her food locally, Wastood enables her to do just that!</p>
                                 </div>
                             </div>
                         </div>
@@ -90,20 +81,12 @@
                     <div class="col-md-4">
                         <div class="team-player">
                             <div class="card card-plain">
-                                <div class="col-md-6 ml-auto mr-auto">
-                                    <img src="material-kit-master/assets/img/faces/christian.jpg" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid">
-                                </div>
-                                <h4 class="card-title">Christian Louboutin
+                                <h4 class="card-title">Jamie Ball
                                     <br>
-                                    <small class="card-description text-muted">Designer</small>
+                                    <small class="card-description text-muted">Buyer</small>
                                 </h4>
                                 <div class="card-body">
-                                    <p class="card-description">You can write here details about one of your team members. You can give more details about what they do. Feel free to add some
-                                        <a href="#">links</a> for people to be able to follow them outside the site.</p>
-                                </div>
-                                <div class="card-footer justify-content-center">
-                                    <a href="#" class="btn btn-link btn-just-icon"><i class="fa fa-twitter"></i></a>
-                                    <a href="#" class="btn btn-link btn-just-icon"><i class="fa fa-linkedin"></i></a>
+                                    <p class="card-description">Jamie has been buying products on this site for a year now. "It's incredible how much money I can save buying on Wastood and as a bonus it helps fight climate change!".</p>
                                 </div>
                             </div>
                         </div>
@@ -111,21 +94,12 @@
                     <div class="col-md-4">
                         <div class="team-player">
                             <div class="card card-plain">
-                                <div class="col-md-6 ml-auto mr-auto">
-                                    <img src="material-kit-master/assets/img/faces/kendall.jpg" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid">
-                                </div>
-                                <h4 class="card-title">Kendall Jenner
+                                <h4 class="card-title">Ana Pearson
                                     <br>
-                                    <small class="card-description text-muted">Model</small>
+                                    <small class="card-description text-muted">Producer</small>
                                 </h4>
                                 <div class="card-body">
-                                    <p class="card-description">You can write here details about one of your team members. You can give more details about what they do. Feel free to add some
-                                        <a href="#">links</a> for people to be able to follow them outside the site.</p>
-                                </div>
-                                <div class="card-footer justify-content-center">
-                                    <a href="#" class="btn btn-link btn-just-icon"><i class="fa fa-twitter"></i></a>
-                                    <a href="#" class="btn btn-link btn-just-icon"><i class="fa fa-instagram"></i></a>
-                                    <a href="#" class="btn btn-link btn-just-icon"><i class="fa fa-facebook-square"></i></a>
+                                    <p class="card-description">Ana has been selling her organic vegetables on our platform for 2 years now. "It's a great opportunity for me to build a local customer base and have a positive impact on the planet at the same time".</p>
                                 </div>
                             </div>
                         </div>
@@ -136,8 +110,8 @@
         <div class="section section-contacts">
             <div class="row">
                 <div class="col-md-8 ml-auto mr-auto">
-                    <h2 class="text-center title">Work with us</h2>
-                    <h4 class="text-center description">Divide details about your product or agency work into parts. Write a few lines about each one and contact us about any further collaboration. We will responde get back to you in a couple of hours.</h4>
+                    <h2 class="text-center title">We want your feedback</h2>
+                    <h4 class="text-center description">We welcome any suggestion on how to improve our website, so please do not hesitate to send us an email.</h4>
                     <form class="contact-form">
                         <div class="row">
                             <div class="col-md-6">
@@ -174,3 +148,4 @@
 ?>
 </body>
 </html>
+
